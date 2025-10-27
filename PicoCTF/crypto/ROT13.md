@@ -1,4 +1,8 @@
 # 13
+### Information
+* Category: Cryptography
+* Points: 
+* Level: Easy
 
 ### Description
 Cryptography can be easy, do you know what ROT13 is? 
