@@ -12,7 +12,7 @@ The problem give us this picture
 ### Hint
 * The flag is in the format PICOCTF{}
 
-### Solution
+## Solution
 * We we can see that each numbers in the picture is the position of a letter in latin alphabet, which contains 26 letters.
 * For example:
     * A --> 1
