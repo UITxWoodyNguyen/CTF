@@ -13,7 +13,7 @@ Additional details will be available after launching your challenge instance.
 1. Developers sometimes leave notes in the code; but not always in plain text.
 2. A common trick is to rotate each letter by 13 positions in the alphabet.
 
-### Solution
+## Solution
 For this challenge, we have access to a web application that we must log into. There is no option to create an account, so we will have to find credentials one way or another.
 
 ![](https://media.discordapp.net/attachments/961544480366931969/1432290314797711400/image.png?ex=690083cd&is=68ff324d&hm=a635dfdc01cbaf0c9befba32972efd91ce3dc02c147b65c129d40ff3954ca42b&=&format=webp&quality=lossless&width=624&height=434&)
