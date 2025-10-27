@@ -1,4 +1,8 @@
 # The numbers
+### Information
+* Category: Cryptography
+* Points: 
+* Level: Easy
 
 ### Description
 The problem give us this picture
