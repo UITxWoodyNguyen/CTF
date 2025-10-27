@@ -18,6 +18,7 @@ For this challenge, we have access to a web application that we must log into. T
 ![](https://media.discordapp.net/attachments/961544480366931969/1432290314797711400/image.png?ex=690083cd&is=68ff324d&hm=a635dfdc01cbaf0c9befba32972efd91ce3dc02c147b65c129d40ff3954ca42b&=&format=webp&quality=lossless&width=624&height=434&)
 
 When checking the source code of the page, we come across this:
+
 ![](https://media.discordapp.net/attachments/961544480366931969/1432291465928642610/image.png?ex=690084e0&is=68ff3360&hm=2cd9a815382d119b64602c6b3cacff95a3593d5384fd9e73718e14e2dd890c76&=&format=webp&quality=lossless&width=751&height=415)
 
 Base on the hints, the HTML comments we find is encoded in [ROT13](https://en.wikipedia.org/wiki/ROT13). So we need to decode it. This is the ROT13 decoding code:
