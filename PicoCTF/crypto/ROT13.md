@@ -12,7 +12,7 @@ Cryptography can be easy, do you know what ROT13 is?
 ### Hint
 * This can be solved online if you don't want to do it by hand!
 
-### Solution
+## Solution
 * ROT13 (short for "rotate by 13 places") is a simple letter substitution cipher used to obscure text. It works by replacing each letter in the alphabet with the letter 13 positions after it, looping around if necessary.
 *Here’s how it works:
     * The English alphabet has 26 letters.
