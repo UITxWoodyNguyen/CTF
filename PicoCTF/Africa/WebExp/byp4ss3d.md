@@ -33,8 +33,8 @@ Here is the website:
 ![](https://media.discordapp.net/attachments/961544480366931969/1432566521644974185/image.png?ex=6901850a&is=6900338a&hm=f01fb49cc0dcd783c2f2fd646be4ad6f906422dc2611e976ff5b9ae0e589c434&=&format=webp&quality=lossless&width=871&height=53)
 * Verified the shell was working by listing the contents:
 ![](https://media.discordapp.net/attachments/961544480366931969/1432567930138398921/image.png?ex=6901865a&is=690034da&hm=f7078ecfc4ebb05d69db8a9d815c4491ced11a6271172d20adb82216f8e9654a&=&format=webp&quality=lossless&width=1265&height=161)
-* Next, searching the flag file by using `command=find / -name "*flag*" 2>/dev/null`, which means redirect stderr into `/dev/null`, this is done so the results is not broken from error messages. Then we can see the `flag.txt` file is located in `/var/www/`
-![](https://media.discordapp.net/attachments/961544480366931969/1432568788251054132/image.png?ex=69018726&is=690035a6&hm=331b51a80b33a24834c9a6a4b0b3bf9d2d8f733af00d43fea3c81adeb84f9043&=&format=webp&quality=lossless&width=1860&height=160)
+* Next, searching the flag file by using `command=find / -name "*flag*"`. Then we can see the `flag.txt` file is located in `/var/www/`
+![](https://media.discordapp.net/attachments/961544480366931969/1432642078441209906/image.png?ex=6901cb68&is=690079e8&hm=1e378b5f24e9e10db88f26282e80efd23faaa8def14cd8fd2936fe3fedee1c89&=&format=webp&quality=lossless&width=1860&height=201)
 * Using `cat` command to get the flag (`command=cat /var/www/flag.txt`):
 ![](https://media.discordapp.net/attachments/961544480366931969/1432569140614267032/image.png?ex=6901877a&is=690035fa&hm=2dd5b0c6beb02a7cb2ea35875c258ade4f7177073c5afbcf9157c98aff6b4ff8&=&format=webp&quality=lossless&width=1288&height=155)
 
