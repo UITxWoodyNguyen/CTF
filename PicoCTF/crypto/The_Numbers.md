@@ -42,4 +42,5 @@ The problem give us this picture
     * 19 → S
     * 15 → O
     * 14 → N
+      
 **The flag is: `PICOCTF{THENUMBERSMASON}`**
