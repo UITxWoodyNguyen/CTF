@@ -4,15 +4,16 @@
 * Points: 100
 * Level: Easy
 
+### Description
+For this challenge, we have access to a web application that we must log into. There is no option to create an account, so we will have to find credentials in another way.
+
+![](https://media.discordapp.net/attachments/961544480366931969/1432290314797711400/image.png?ex=690083cd&is=68ff324d&hm=a635dfdc01cbaf0c9befba32972efd91ce3dc02c147b65c129d40ff3954ca42b&=&format=webp&quality=lossless&width=624&height=434&)
+
 ### Hint
 1. Developers sometimes leave notes in the code; but not always in plain text.
 2. A common trick is to rotate each letter by 13 positions in the alphabet.
 
 ## Solution
-For this challenge, we have access to a web application that we must log into. There is no option to create an account, so we will have to find credentials one way or another.
-
-![](https://media.discordapp.net/attachments/961544480366931969/1432290314797711400/image.png?ex=690083cd&is=68ff324d&hm=a635dfdc01cbaf0c9befba32972efd91ce3dc02c147b65c129d40ff3954ca42b&=&format=webp&quality=lossless&width=624&height=434&)
-
 When checking the source code of the page, we come across this:
 
 ![](https://media.discordapp.net/attachments/961544480366931969/1432291465928642610/image.png?ex=690084e0&is=68ff3360&hm=2cd9a815382d119b64602c6b3cacff95a3593d5384fd9e73718e14e2dd890c76&=&format=webp&quality=lossless&width=751&height=415)
