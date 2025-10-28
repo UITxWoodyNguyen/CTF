@@ -4,7 +4,7 @@
 - Points: 300
 - Level: Medium
 ### Description
-A university's online registration portal asks students to upload their ID cards for verification. The developer put some filters in place to ensure only image files are uploaded but are they enough? Take a look at how the upload is implemented. Maybe there's a way to slip past the checks and interact with the server in ways you shouldn't.
+The task is finding a way to bypass the registration portal requiring students to upload ID images and enforces image-only filters
 
 Here is the website:
 
