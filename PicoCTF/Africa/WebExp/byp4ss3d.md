@@ -14,12 +14,7 @@ Here is the website:
 - Try uploading more than just one file.
 
 ## Solution
-> Overall, the web only allows users to upload file with basic image extension checks (`.jpg, .png, .gif`). However, the server runs Apache, which can be tricked via `.htaccess` file in order to certain file types are handled as PHP scripts.
-### So what is the attacking method?
-We need to create and upload 2 files:
-
-- A `.htaccess` file to configure Apache to execute image files as PHP
-- A PHP web shell disguised with an image extension 
+> Overall, the web only allows users to upload file with basic image extension checks (`.jpg, .png, .gif`). However, the server runs Apache, which can be tricked via `.htaccess` file in order to certain file types are handled as PHP scripts. -> We need to create this file types.
 
 ### Create files
 
