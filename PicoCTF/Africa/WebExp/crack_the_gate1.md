@@ -52,6 +52,6 @@ Checking the code result, we find this:
 
 According to this message, we can use the header `X-Dev-Access:yes`, which is a backdoor left by the developers. To do this, we can use [BurpSuite](https://portswigger.net/burp).
 
-After intercepting and adding the header X-Dev-Access:yes to the request (along with any password), we can find the flag.
+After intercepting and adding the header `X-Dev-Access:yes` to the request (along with any password), we can find the flag.
 
 ![](https://media.discordapp.net/attachments/961544480366931969/1432297979443675156/image.png?ex=69008af1&is=68ff3971&hm=1d861470ec8f58cef2956c90b8e4452335e19577833b59e032bc50a12eba46e8&=&format=webp&quality=lossless&width=1291&height=451)
