@@ -10,7 +10,7 @@ We found a brand new type of encryption, can you break the secret code? (Wrap wi
 `mlnklfnknljflfmhjimkmhjhmljhjomhmmjkjpmmjmjkjpjojgjmjpjojojnjojmmkmlmijimhjmmj`
 
 `new_caesar.py`:
-```
+```python
 import string
 
 LOWERCASE_OFFSET = ord("a")
@@ -72,7 +72,7 @@ print(enc)
 - Here is the decryption code:
 
     `decrypt.py`:
-    ```
+    ```python
     import string
 
     LOWERCASE_OFFSET = ord('a')
