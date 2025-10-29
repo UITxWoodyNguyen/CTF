@@ -24,19 +24,24 @@ Here is the website:
 
 ![](https://media.discordapp.net/attachments/961544480366931969/1432564452645146634/image.png?ex=6901831d&is=6900319d&hm=7dcd39f81cc25afb388d4344af80489caf3185ffe55e2f066733bfe88e1e832a&=&format=webp&quality=lossless&width=611&height=190)
 
+
 -  `shell.jpg` file: The file will run the PHP code in `shell.jpg` instead of serving it as image content, which allow us to pass arbitrary operating system commands in the command query parameter.
 
 ![](https://media.discordapp.net/attachments/961544480366931969/1432564789971779703/image.png?ex=6901836d&is=690031ed&hm=b79c1d892acded4cb14d8c699477fc47c3786032bfd5ab5e9f771b42e608dbf2&=&format=webp&quality=lossless&width=539&height=194)
 
 ### Uploading the files and Executing commands
 * We upload `.htaccess` file and `shell.jpg` file respectively.
+  
 * After the files uploaded, we can see both files are located in `/images/` directory
 ![](https://media.discordapp.net/attachments/961544480366931969/1432566452992479332/image.png?ex=690184fa&is=6900337a&hm=af7a6f8b5d52a92a4a721bf329d1ba26a508e2386a98c58724f86be0a0faf070&=&format=webp&quality=lossless&width=869&height=49)
 ![](https://media.discordapp.net/attachments/961544480366931969/1432566521644974185/image.png?ex=6901850a&is=6900338a&hm=f01fb49cc0dcd783c2f2fd646be4ad6f906422dc2611e976ff5b9ae0e589c434&=&format=webp&quality=lossless&width=871&height=53)
+
 * Verified the shell was working by listing the contents (using `ls` command):
 ![](https://media.discordapp.net/attachments/961544480366931969/1432643907136651324/image.png?ex=6901cd1c&is=69007b9c&hm=f96c92eaa51ee59546ab555f1470a9e584bac66cec66dc5533b651737891f695&=&format=webp&quality=lossless&width=984&height=151)
+
 * Next, using `find` command to search the flag file (`command=find / -name "*flag*"`). Then we can see the `flag.txt` file is located in `/var/www/`
 ![](https://media.discordapp.net/attachments/961544480366931969/1432642078441209906/image.png?ex=6901cb68&is=690079e8&hm=1e378b5f24e9e10db88f26282e80efd23faaa8def14cd8fd2936fe3fedee1c89&=&format=webp&quality=lossless&width=1860&height=201)
+
 * Using `cat` command to get the flag (`command=cat /var/www/flag.txt`):
 ![](https://media.discordapp.net/attachments/961544480366931969/1432643226279477248/image.png?ex=6901cc7a&is=69007afa&hm=6dfd56b85bff4b17995e236842b6aa1cd6fbd98053337bd5b719b929d6a2c7f0&=&format=webp&quality=lossless&width=1249&height=151)
 
