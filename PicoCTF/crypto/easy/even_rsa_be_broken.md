@@ -9,7 +9,7 @@
 We are given an encrypted flag and it need to be decrypted with just N and e. Moreover, we can connect with the problem via `nc verbal-sleep.picoctf.net <port>`.
 
 This is the source code (or encryption code) of this problem:
-```
+```python
 from sys import exit
 from Crypto.Util.number import bytes_to_long, inverse
 from setup import get_primes
@@ -78,8 +78,7 @@ The script finds the prime factors *p* and *q* of *N* using the Pollard-Rho algo
 4. Convert *m* to bytes and decode as UTF-8 (if possible).
 ---
 ## Here is the source code to decrypt:
-```
-# python
+```python
 import random
 import math
 import sys
