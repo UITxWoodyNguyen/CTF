@@ -10,7 +10,7 @@ We need to inject this website to get the flag.
 ![](https://media.discordapp.net/attachments/961544480366931969/1432623415159947357/image.png?ex=6901ba07&is=69006887&hm=847e4adf11bdbc3c01420750ac191d47aa0f44f9de7bfc986a01ced1b2627424&=&format=webp&quality=lossless&width=754&height=255)
 
 ### Hint
-- Server Side Template Injection
+- Server Side Template Injection 
 
 ## Solution
 - First, we try some basic input to know how this web work. I have tried `3+7` and `{{3+7}}`, and here is the result from this web:
