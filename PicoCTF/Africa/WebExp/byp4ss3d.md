@@ -15,14 +15,16 @@ Here is the website:
 
 ## Solution
 > Overall, the web only allows users to upload file with basic image extension checks (`.jpg, .png, .gif`). However, the server runs Apache, which can be tricked via `.htaccess` file in order to certain file types are handled as PHP scripts. -> We need to create this file types.
+>
+> Read more about [`.htaccess`](https://hackmd.io/@thanhnguyne2403/ByBCkEyy-x) file
 
 ### Create files
 
-- `.htaccess` file:
+- `.htaccess` file: This file tells Apache: "Treat files with .jpg, .png, .gif extensions as PHP files"
 
 ![](https://media.discordapp.net/attachments/961544480366931969/1432564452645146634/image.png?ex=6901831d&is=6900319d&hm=7dcd39f81cc25afb388d4344af80489caf3185ffe55e2f066733bfe88e1e832a&=&format=webp&quality=lossless&width=611&height=190)
 
--  `shell.jpg` file: The file content allow us to pass arbitrary operating system commands in the command query parameter.
+-  `shell.jpg` file: The file will run the PHP code in `shell.jpg` instead of serving it as image content, which allow us to pass arbitrary operating system commands in the command query parameter.
 
 ![](https://media.discordapp.net/attachments/961544480366931969/1432564789971779703/image.png?ex=6901836d&is=690031ed&hm=b79c1d892acded4cb14d8c699477fc47c3786032bfd5ab5e9f771b42e608dbf2&=&format=webp&quality=lossless&width=539&height=194)
 
