@@ -20,7 +20,7 @@ Here is the website:
 
 ### Create files
 
-- `.htaccess` file: This file tells Apache: "Treat files with .jpg, .png, .gif extensions as PHP files"
+- `.htaccess` file: This file tells Apache: "Treat files with `.jpg, .png, .gif` extensions as PHP files"
 
 ![](https://media.discordapp.net/attachments/961544480366931969/1432564452645146634/image.png?ex=6901831d&is=6900319d&hm=7dcd39f81cc25afb388d4344af80489caf3185ffe55e2f066733bfe88e1e832a&=&format=webp&quality=lossless&width=611&height=190)
 
