@@ -18,7 +18,7 @@ Cryptography can be easy, do you know what ROT13 is?
     * The English alphabet has 26 letters.
     * Shifting by 13 means that applying ROT13 twice gives you back the original text.
 * The encrypted flag is given in description, so we need a decrypting code to get the plaintext of the flag. Here is the code:
-```
+```c++
 #include <bits/stdc++.h>
 using namespace std;
 
