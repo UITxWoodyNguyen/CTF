@@ -52,6 +52,6 @@ ErrorDocument 404 /errors/not-found.html
 ### MIME Type Configuration
 - Việc này cho phép máy chủ nhận diện và xử lý nhiều loại định dạng khác nhau.
 ```apache
-AddType application/pdf .pdf
-AddType application/x-httpd-php .jpg .html .txt
+AddType application/pdf .pdf    # mọi tệp có phần mở rộng .pdf sẽ được Apache gửi đi với MIME type là application/pdf.
+AddType application/x-httpd-php .jpg .html .txt    # Apache sẽ xử lý các file có phần mở rộng .jpg, .html, và .txt như file PHP.
 ```
