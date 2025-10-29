@@ -39,7 +39,7 @@ Here is the website:
 * Verified the shell was working by listing the contents (using `ls` command):
 ![](https://media.discordapp.net/attachments/961544480366931969/1432643907136651324/image.png?ex=6901cd1c&is=69007b9c&hm=f96c92eaa51ee59546ab555f1470a9e584bac66cec66dc5533b651737891f695&=&format=webp&quality=lossless&width=984&height=151)
 
-* Next, using `find` command to search the flag file (`command=find / -name "*flag*"`). Then we can see the `flag.txt` file is located in `/var/www/`
+* Next, using `find` command to search the flag file (`command=find / -name "*flag*"`). Then we can see the `flag.txt` file located in `/var/www/`
 ![](https://media.discordapp.net/attachments/961544480366931969/1432642078441209906/image.png?ex=6901cb68&is=690079e8&hm=1e378b5f24e9e10db88f26282e80efd23faaa8def14cd8fd2936fe3fedee1c89&=&format=webp&quality=lossless&width=1860&height=201)
 
 * Using `cat` command to get the flag (`command=cat /var/www/flag.txt`):
