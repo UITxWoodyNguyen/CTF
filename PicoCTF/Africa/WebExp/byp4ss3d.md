@@ -44,4 +44,4 @@ Here is the website:
 * Using `cat` command to get the flag (`command=cat /var/www/flag.txt`):
 ![](https://github.com/UITxWoodyNguyen/CTF/blob/main/Picture/image_11.png?raw=true)
 
-The flag is **`picoCTF{s3rv3r_byp4ss_0c257942}`**
+##### The flag is **`picoCTF{s3rv3r_byp4ss_0c257942}`**
