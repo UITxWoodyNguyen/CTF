@@ -1,6 +1,7 @@
 # Keygenme
 ### Information
 * Category: Reverse Engineering
+* Point: 300
 * Level: Hard
 
 ### Description
@@ -144,5 +145,6 @@ v16 = md5_hash[26]
 
 print(prefix + v14 + v16 + v15 + md5_hash[0] + v16 + v14 + md5_hash[12] + v16 + "}")
 ```
+
 
 Run the script and we got our flag `picoCTF{br1ng_y0ur_0wn_k3y_9d74d90d}`.
