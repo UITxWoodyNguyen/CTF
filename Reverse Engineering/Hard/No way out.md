@@ -1,6 +1,7 @@
 # Wizardlike
 ### Information
 * Category: Reverse Engineering
+* Point: 500
 * Level: Hard
 
 ### Description
@@ -58,3 +59,4 @@ Now we can open `game` and see that we can go through walls and empty floors.
 
 
 After 10 levels, we got the flag `picoCTF{ur_4_w1z4rd_4844AD6f}`.
+
