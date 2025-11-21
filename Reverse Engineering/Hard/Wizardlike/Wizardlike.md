@@ -49,7 +49,7 @@ Change 20 to 40 and move on to `3C 20`:
 
 ![alt text](image-9.png)
 
-Change 20 to 40 again and press `Ctrl + S` to save the changes, we can verify whether the patch is succeed by open `game` in IDA again, nagivate to function `sub_402188`, we see that our patch is correctly replacing the walls and empty floors check with `@` now:
+Change 20 to 40 again and press `Ctrl + S` to save the changes, we can verify whether the patch is succeed by open `game` in IDA again, navigate to function `sub_402188`, we see that our patch is correctly replacing the walls and empty floors check with `@` now:
 
 ![alt text](image-10.png)
 
@@ -59,4 +59,5 @@ Now we can open `game` and see that we can go through walls and empty floors.
 
 
 After 10 levels, we got the flag `picoCTF{ur_4_w1z4rd_4844AD6f}`.
+
 
