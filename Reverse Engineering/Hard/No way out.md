@@ -52,8 +52,9 @@ Change 20 to 40 again and press `Ctrl + S` to save the changes, we can verify wh
 
 ![alt text](image-10.png)
 
-Now we can open `game` and see that we can go through walls and empty floors now.
+Now we can open `game` and see that we can go through walls and empty floors.
 
 ![alt text](image-11.png)
+
 
 After 10 levels, we got the flag `picoCTF{ur_4_w1z4rd_4844AD6f}`.
