@@ -13,81 +13,47 @@ Download the game.
 * With the right focus and preparation, you can teleport to anywhere on the map.
 
 ## Solution:
-### Encrypting code explanation:
-- `b16_encode` function:
-    - Each letter “c” in plaintext string is changed into ASCII code, then presented as 8-bit binary.
-    - Separate 8-bit in to 2 groups of 4-bits:
-        - `binary[:4]` (high bit) → be changed into number → mapping with an character in `ALPHABET`
-        - `binary[4:]` (low bit) → do the same as high bit
-    
-    ⇒ Each letter will be mapped with 2 others letters in ALPHABET
-    
-    - For example: “A” converted into ASCII code is 65 = “01000001”
-        - “0100” = 4 → “e”
-        - “0001” = 1 → “b”
-        
-        ⇒ A → “eb”
-        
-- `shift` function:
-    - `c` and `k` is the characters, and `t1` and `t2` is the position
-        - Code to get the position of a character: 
-        `pos = ord(c) - LOWERCASE_OFFSET`
-    - The main purpose is move `c` right `t2` steps in the alphabet.
-- Main function:
-    - `flag` is the plaintext (string need to be encrypted)
-    - `b16` is the **encoded string** of flag.
-    - For each letter in `b16`, encrypt with the key word: `key[i % len(key)]`.
-    - Push the encrypted letters back of `enc`.
+Open the file `game` in IDA and navigate to `start` function. We can see the code loads 3 functions `sub_4242F0`, `sub_424250`, `sub_402437` and then call `sub_4235F0`.
 
-> **⇒ We need to reverse the process and Brute Force all 16 keys**
-- Here is the decryption code:
+![alt text](image.png)
 
-    `decrypt.py`:
-    ```python
-    import string
+Coming to function `sub_402437` and decompile it, we found the code that is most likely the game's core function, which contains maps rendering and player's movement:
 
-    LOWERCASE_OFFSET = ord('a')
-    ALPHABET = string.ascii_lowercase[:16]  # 'a' to 'p'
+### Map rendering:
 
-    # decode_function
-    def b16_decode(encoded_str):
-        decode_string = ""
-        for char in range(0, len(encoded_str), 2):
-            step = ""
-            first_char = "{:04b}".format(ALPHABET.index(encoded_str[char]))
-            step += first_char
-            second_char = "{:04b}".format(ALPHABET.index(encoded_str[char + 1]))
-            step += second_char
-            byte_value = int(step, 2)
-            decode_string += chr(byte_value)
-        return decode_string
+![alt text](image-3.png)
 
-    def unshift(char, key):
-        t2 = ord(char) - LOWERCASE_OFFSET
-        t1 = ord(key) - LOWERCASE_OFFSET
-        t3 = (t2 - t1) % len(ALPHABET)
-        return ALPHABET[t3]
+### Player's movement:
 
-    def decrypt(encrypted_str, key):
-        decrypted_str = ""
-        for i, char in enumerate(encrypted_str):
-            decrypted_str += unshift(char, key[i % len(key)])
-        decrypted_str = b16_decode(decrypted_str)
-        return decrypted_str
+![alt text](image-1.png)
 
-    encrypted_message = "mnlkfnknljlfmhjimkmhjmlhjomhmmjkjpmmjmjkjpjogjmjpjoojnjojmmkmlmijhmjmmj"
+From the map rendering code we know that the flag is dynamically rendered at each level and we need to get close for the flag to appeared, to do that, we need to go through walls and empty floors. After examining each function responsible for the player's movement, we found that function `sub_402188` is called in every movement made by the player:
 
-    for key in ALPHABET:
-        decrypted_message = decrypt(encrypted_message, key)
-        print(f"key: {key}, Decrypted Message: {decrypted_message}")
-        # print("picoCTF{" + decrypted_message + "}")
-    ```
-- Code explanation:
-    - `b16_decode` function (reverse process of `b16_encode` function above):
-        - Get 2 consecutive characters in the encoded string → get their index
-        - Convert each index into 4-bit and merge into 2 group (4-bit + 4-bit = 8-bit = 1 byte)
-        - Change into ASCII code
-    - `unshift` function: `unshift(c,k) = (c - k) mod 16`
-    - `decrypt` function:
-        - For each characters in `encrypted_str`, using unshift function to eliminate [Vigenère cipher](https://www.geeksforgeeks.org/dsa/vigenere-cipher/)
-        - Using `b16_decode` to get the plaintext (not be ASCII encoded)
+![alt text](image-2.png)
+
+This function checks whether the player is outside the 100×100 map or hit the wall (`#`) or empty floor (` `). Our goal is to patch the check by replacing them with `@` so that our player can go through the wall and empty floor to see the flag.
+
+![alt text](image-5.png)
+
+Search for the function named `sub_402188` in IDA window, we can get the assembly code that performs the check:
+
+![alt text](image-6.png)
+![alt text](image-7.png)
+
+From ChatGPT, we know that `cmp al, 23h` is `3C 23` in opcode and `cmp al, 20h` is `3C 20`. So open `game` in HxD and search for `3C 23` first by pressing `Ctrl + F`, since `sub_402188` has offset `0x2188`, we want to find it near the address too:
+
+![alt text](image-8.png)
+
+Change 20 to 40 and move on to `3C 20`:
+
+![alt text](image-9.png)
+
+Change 20 to 40 again and press `Ctrl + S` to save the changes, we can verify whether the patch is succeed by open `game` in IDA again, nagivate to function `sub_402188`, we see that our patch is correctly replacing the walls and empty floors check with `@` now:
+
+![alt text](image-10.png)
+
+Now we can open `game` and see that we can go through walls and empty floors now.
+
+![alt text](image-11.png)
+
+After 10 levels, we got the flag `picoCTF{ur_4_w1z4rd_4844AD6f}`.
