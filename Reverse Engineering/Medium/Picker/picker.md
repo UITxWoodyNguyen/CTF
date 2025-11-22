@@ -186,7 +186,7 @@ while(True):
     print(e)
     break
 ```
-- We can observed that, this code requires a random input (maybe numbers or char), and it will return to a list of hex value (for example: `0x66 0x6c 0x61 0x67 0x7b ...`). The hex value can be decode into the text, which can be the flag of this problem.
+- We can observed that, this code requires a random input (maybe numbers or , maybe a name of function).
 - We also have `C/C++` code in this source code:
 
     - With the `esoteric_1()`, the function `query_amp_bios` will checks whether the BIOS provides Advanced Power Management (APM) support, verifies its signature, attempts a 32-bit connection, and stores the returned segment and version information for later use by the kernel.
@@ -195,7 +195,7 @@ while(True):
     - The `a20_test_short()` is a faster, reduced-loop version of the same A20 check, useful for a quick initial test.
 
 #### How to get the flag ?
-- However, we don't need to care about the usage of all above function. When connect to the server via netcat, we received a list of hex value:
+- However, we don't need to care about the usage of all above function. We observed that, we can run the function we want instead of `getRandomumber()`. Moreover, only the `win()` function can return to a list of hex value, which can be the flag of this problem. When connect to the server via netcat, we received a list of hex value:
 ```
 Try entering "getRandomNumber" without the double quotes...
 ==> 0x70 0x69 0x63 0x6f 0x43 0x54 0x46 0x7b 0x34 0x5f 0x64 0x31 0x34 0x6d 0x30 0x6e 0x64 0x5f 0x31 0x6e 0x5f 0x37 0x68 0x33 0x5f 0x72 0x30 0x75 0x67 0x68 0x5f 0x36 0x65 0x30 0x34 0x34 0x34 0x30 0x64 0x7d 
