@@ -187,15 +187,10 @@ while(True):
     break
 ```
 - We can observed that, this code requires a random input (maybe numbers or , maybe a name of function).
-- We also have `C/C++` code in this source code:
-
-    - With the `esoteric_1()`, the function `query_amp_bios` will checks whether the BIOS provides Advanced Power Management (APM) support, verifies its signature, attempts a 32-bit connection, and stores the returned segment and version information for later use by the kernel.
-    - `empty_8042()` interacts with the legacy 8042 keyboard controller, repeatedly reading its status ports to ensure the input and output buffers are empty before any new commands are issued.
-    - The `a20_test()`function checks whether the A20 line—responsible for allowing access beyond the first 1MB of memory—is enabled by writing a value to a low-memory address and reading a corresponding high-memory location to detect wraparound behavior.
-    - The `a20_test_short()` is a faster, reduced-loop version of the same A20 check, useful for a quick initial test.
+- We also have `C/C++` code in this source code. However, we don't have to care about it.
 
 #### How to get the flag ?
-- However, we don't need to care about the usage of all above function. We observed that, we can run the function we want instead of `getRandomumber()`. Moreover, only the `win()` function can return to a list of hex value, which can be the flag of this problem. When connect to the server via netcat, we received a list of hex value:
+- We observed that, we can run the function we want instead of `getRandomumber()`. Moreover, only the `win()` function can return to a list of hex value, which can be the flag of this problem. When connect to the server via netcat and use `"win"` as the input, we received a list of hex value:
 ```
 Try entering "getRandomNumber" without the double quotes...
 ==> 0x70 0x69 0x63 0x6f 0x43 0x54 0x46 0x7b 0x34 0x5f 0x64 0x31 0x34 0x6d 0x30 0x6e 0x64 0x5f 0x31 0x6e 0x5f 0x37 0x68 0x33 0x5f 0x72 0x30 0x75 0x67 0x68 0x5f 0x36 0x65 0x30 0x34 0x34 0x34 0x30 0x64 0x7d 
