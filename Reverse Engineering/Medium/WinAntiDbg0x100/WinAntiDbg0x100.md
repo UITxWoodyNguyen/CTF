@@ -15,7 +15,7 @@ Run `WinAntiDbg0x100.exe` in cmd, we see that this application needs to be opene
 
 ![alt text](image.png)
 
-Open it in IDA, navigate to function `main` and decompile it. We found that the program calls `IsDebuggerPresent` function from WinAPI to check whether a debugger is attached to it. So to get the flag, we need to bypass the check by changing the return value to be `false`.
+Open it in IDA, navigate to function `main` and decompile it. We found that the program calls `IsDebuggerPresent` function from WinAPI to check whether a debugger is attached to it. So to get the flag, we need to bypass the check by changing the return value to `false`.
 
 ![alt text](image-1.png)
 
@@ -42,5 +42,6 @@ Press `F8` for the program to continue running, we can see that it jumps over th
 ![alt text](image-7.png)
 
 Keep pressing `F8` until we see a flag `picoCTF{d3bug_f0r_th3_Win_0x100_cc0ff664}` appears and we are done! The flag is not output in the console because the application use function `OutputDebugStringW` to send texts to any debugger that it attaches to.
+
 
 ![alt text](image-8.png)
