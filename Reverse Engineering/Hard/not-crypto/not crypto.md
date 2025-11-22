@@ -394,6 +394,7 @@ We use `ltrace` with option `-e` (event) and `memcmp` to tell us whenever the pr
 ltrace -e memcmp -s 100 ./not-crypto
 ```
 
-We are able to get the flag `picoCTF{c0mp1l3r_0pt1m1z4t10n_15_pur3_w1z4rdry_but_n0_pr0bl3m?}` at the output :D
+We are able to get the flag `picoCTF{c0mp1l3r_0pt1m1z4t10n_15_pur3_w1z4rdry_but_n0_pr0bl3m?}` from the output :D
+
 
 ![alt text](image-1.png)
