@@ -41,7 +41,8 @@ Press `F8` for the program to continue running, we can see that it jumps over th
 
 ![alt text](image-7.png)
 
-Keep pressing `F8` until we see a flag `picoCTF{d3bug_f0r_th3_Win_0x100_cc0ff664}` appears and we are done! The flag is not output in the console because the application use function `OutputDebugStringW` to send texts to any debugger that it attaches to.
+Keep pressing `F8` until we see a flag `picoCTF{d3bug_f0r_th3_Win_0x100_cc0ff664}` appears and we are done! The flag is not output in the console because the application uses function `OutputDebugStringW` to send texts to any debugger that it attaches to.
 
 
 ![alt text](image-8.png)
+
