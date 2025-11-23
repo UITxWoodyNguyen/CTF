@@ -66,11 +66,11 @@ Open the program in `x32dbg` (`Administrator mode` ofcourse), go to `Symbols` ta
 
 ![alt text](image-2.png)
 
-From IDA we know that function `sub_4011D0` has offset `0x11D0`, so we will locate it and place a breakpoint on it. In this case, the function is located at `00BF11D0`.
+From IDA we know that function `sub_4011D0` has offset `0x11D0`, so we will locate and place a breakpoint on it. In this case, the function is located at `00BF11D0`.
 
 ![alt text](image-4.png)
 
-Press `F9` for the it to run until the breakpoint is hit. Use `F8` to step over until the `ret` code, we can see `eax` holds value `1`, change it to `0`.
+Press `F9` for the application to run until the breakpoint is hit. Use `F8` to step over until the `ret` code, we can see `eax` holds value `1`, change it to `0`.
 
 ![alt text](image-5.png)
 
@@ -78,3 +78,4 @@ For function `IsDebuggerPresent`, we do just like `WinAntiDbg0x100` and got our 
 
 
 ![alt text](image-6.png)
+
