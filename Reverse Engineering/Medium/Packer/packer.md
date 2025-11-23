@@ -22,7 +22,7 @@ strings out | less
 ```
 - Checking closely, we will see that the binary is compressed or packed by using UPX:
 
-![UPX]()
+![UPX](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Packer/pack1.png?raw=true)
 
 - So, we can use `upx` command to decompress this file:
 ```c
@@ -32,6 +32,8 @@ upx -d ./out
 
 - After being decompressed, the contents of the binary file is printable, so that we can use `strings` and `egrep` command to find the flag:
 
-![Flag]()
+![Flag](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Packer/pack2.png?raw=true)
 
 - Using [Cyberchef](https://gchq.github.io/CyberChef/) tool to decode the flag.
+
+![Final](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Packer/pack3.png?raw=true)
