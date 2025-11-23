@@ -14,7 +14,9 @@ I have a friend that enjoys coding and he hasn't stopped talking about a snake r
 
 ### Solution
 #### What we got ?
-- First, we try to check what is the type of this file by using `file` command. And we can see, this is an ASCII text file. Using `strings` to get all the data from this file, then we will have the [`raw_data.txt`]() file.
+- First, we try to check what is the type of this file by using `file` command. And we can see, this is an ASCII text file. Using `strings` to get all the data from this file, then we will have the [`raw_data.txt`](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/weirdSnake/raw_data.txt) file.
+
+![Ascii](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/weirdSnake/snake.png?raw=true)
 
 #### How to get the flag ?
 - We observed that, this is a python bytecode file. So let's try to analyze it:
