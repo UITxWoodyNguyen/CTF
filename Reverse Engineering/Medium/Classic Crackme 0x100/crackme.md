@@ -14,7 +14,7 @@ Access the server using `nc titan.picoctf.net <port>`
 
 ### Solution
 #### What we got ?
-- First, decompiler the binary file by using Ghidra tools at https://dogbolt.org and we will receive a [`crackme.cpp`](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Classic%20Crackme%200x100/crack/crackme.c) file.
+- First, decompiler the binary file by using Ghidra tools at https://dogbolt.org and we will receive a [`crackme.c`](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Classic%20Crackme%200x100/crack/crackme.c) file.
 - So what is the process of this code ?
 
     - We have found the correct password. However, it has been transformed:
