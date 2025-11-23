@@ -1,6 +1,7 @@
 # WinAntiDbg0x100
 ### Information
 * Category: Reverse Engineering
+* Point: 200
 * Level: Medium
 
 ### Description
@@ -45,4 +46,5 @@ Keep pressing `F8` until we see a flag `picoCTF{d3bug_f0r_th3_Win_0x100_cc0ff664
 
 
 ![alt text](image-8.png)
+
 
