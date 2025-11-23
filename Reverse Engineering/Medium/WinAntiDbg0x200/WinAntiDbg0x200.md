@@ -1,6 +1,7 @@
 # WinAntiDbg0x200
 ### Information
 * Category: Reverse Engineering
+* Point: 300
 * Level: Medium
 
 ### Description
@@ -74,5 +75,6 @@ Press `F9` for the it to run until the breakpoint is hit. Use `F8` to step over 
 ![alt text](image-5.png)
 
 For function `IsDebuggerPresent`, we do just like `WinAntiDbg0x100` and got our flag `picoCTF{0x200_debug_f0r_Win_ce2f78e8}`.
+
 
 ![alt text](image-6.png)
