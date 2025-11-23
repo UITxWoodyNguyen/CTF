@@ -15,12 +15,14 @@
 | Quantum Scrambler | Cryptography, python | | Windows, Linux |
 | Tap into Hash | Cryptography, python | | Windows, Linux |
 | weirdSnake | python bytecode, decompile | | Windows, Linux |
-| | | | |
-| | | | |
+| WinAntiDbg0x100 | Anti-debug | IDA, x32dbg | Windows |
+| WinAntiDbg0x200 | Anti-debug | IDA, x32dbg | Windows |
 
 
 
 ### Level: Hard
 | Problem  | About | Tools | System |
 | ----- |-----| ---- | ---- |
-| | | | |
+| Keygenme | Crypto | IDA | Windows |
+| Wizardlike | Binary patching | IDA, HxD | Windows |
+| not-crypto | Crypto | IDA | Window, Linux |
