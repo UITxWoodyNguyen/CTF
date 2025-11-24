@@ -19,7 +19,7 @@ This program has constructed the flag using hex ascii values. Identify the flag 
     ![File Type](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/ASCII%20FTW/ftw1.png?raw=true)
 
 #### How to get the flag ?
-- First, set the `disassembly-flavor` into `intel` because the default flavor is `AT&T`. Then try to disassemble the file:
+- First, set the `disassembly-flavor` into `intel` because the default flavor is `AT&T`. Then try to disassemble the `main`:
 
     ![diasm](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/ASCII%20FTW/ftw2.png?raw=true)
 
