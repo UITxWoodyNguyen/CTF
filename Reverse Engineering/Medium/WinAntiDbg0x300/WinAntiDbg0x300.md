@@ -139,7 +139,7 @@ void __cdecl DecryptFlag(unsigned __int8 *key)
 }
 ```
 
-We make a guess that this have something to do with the earlier `ComputeHash` function. We assume that it will take in a key that is likely the `HASH` computed after a number of time that `ComputeHash` gets called and use it to decrypt the flag. Double click on the variable `FLAG_SIZE`, we found that it is located near both `FLAG` and `HASH`, which reinforces our guess.
+We make a guess that this has something to do with the earlier `ComputeHash` function. We assume that it will take in a key that is likely the `HASH` computed after a number of time that `ComputeHash` gets called and use it to decrypt the flag. Double click on the variable `FLAG_SIZE`, we found that it is located near both `FLAG` and `HASH`, which reinforces our guess.
 
 ![alt text](image-3.png)
 
@@ -268,6 +268,7 @@ We can verify the change by reopen it in `IDA`.
 Now run `WinAntiDbg0x300_unpacked.exe` in `x32dbg` and we got our flag `picoCTF{Wind0ws_antid3bg_0x300_daad7155}`.
 
 ![alt text](image-24.png)
+
 
 
 
