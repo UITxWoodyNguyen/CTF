@@ -40,7 +40,7 @@ Select the PDB file and choose `OK`.
 
 ![alt text](image-2.png)
 
-Now we can see that the code is easier to analyse now.
+Now we can see that the code is easier to analyse.
 
 ```c
 int __stdcall wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
@@ -268,5 +268,6 @@ We can verify the change by reopen it in `IDA`.
 Now run `WinAntiDbg0x300_unpacked.exe` in `x32dbg` and we got our flag `picoCTF{Wind0ws_antid3bg_0x300_daad7155}`.
 
 ![alt text](image-24.png)
+
 
 
