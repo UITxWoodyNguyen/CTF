@@ -143,7 +143,7 @@ We make a guess that this have something to do with the earlier `ComputeHash` fu
 
 ![alt text](image-3.png)
 
-So our tatic is to avoid stopping `ComputeHash` from running and bypass all the checks. We will go from top to down, our first wall is `DetectDebuggerAtLaunch`, which has the original name `sub_401276`. We will make this return `0` regardless of the function behavior. Since this function wraps another function `sub_402D00`, which contains the detection code, go to `sub_402D00` and scroll to the bottom, we will take opcode `32 C0 EB 02 B0 01 8B E5 5D C3` from IDA and search for it in `HxD`. We found it at `0x216E` (since it is the only address that near `0x2D00`)
+So our tatic is to avoid stopping `ComputeHash` from running and bypass all the checks. We will go from top to down, our first wall is `DetectDebuggerAtLaunch`, which has the original name `sub_401276`. We will make this return `0` regardless of the function behavior. Since this function wraps another function `sub_402D00`, which contains the detection code, go to `sub_402D00` and scroll to the bottom, we will take opcode `32 C0 EB 02 B0 01 8B E5 5D C3` from IDA and search for it in `HxD`. We found it at `0x216E` (since it is the only address that is near `0x2D00`)
 
 ![alt text](image-7.png)
 
@@ -178,7 +178,7 @@ int sub_402D00()
 }
 ```
 
-Our second wall is `EnableDebugPrivilege` (original name is `sub_401267`) which will stop the program from running if the debugger is not started in `Administrator mode`. Although this is not a detection, but it annoys me so we will patch it by noping it out so that the function can't run. Go to function `_WinMain@16_0` and search for `sub_401267`. We will take opcode `E8 56 EA FF FF` from IDA and search for it in `HxD`.
+Our second wall is `EnableDebugPrivilege` (original name is `sub_401267`) which will stop the program from running if the debugger is not started in `Administrator mode`. Although this is not a detection, it annoys me so we will patch it by noping it out so that the function can't run. Go to function `_WinMain@16_0` and search for `sub_401267`. We will take opcode `E8 56 EA FF FF` from IDA and search for it in `HxD`.
 
 ![alt text](image-11.png)
 
@@ -268,4 +268,5 @@ We can verify the change by reopen it in `IDA`.
 Now run `WinAntiDbg0x300_unpacked.exe` in `x32dbg` and we got our flag `picoCTF{Wind0ws_antid3bg_0x300_daad7155}`.
 
 ![alt text](image-24.png)
+
 
