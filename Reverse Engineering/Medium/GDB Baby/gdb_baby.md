@@ -131,3 +131,25 @@ Now for something a little different. `0x2262c96b` is loaded into memory in the 
 - It will return to 4 hex value. Combine off of them and we will get the flag.
 
     ![All Process](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/GDB%20Baby/baby3-3.png?raw=true)
+
+## Step 4
+### Description
+`main` calls a function that **multiplies** `eax` by a constant. The flag for this challenge is that constant in decimal base. If the constant you find is `0x1000`, the flag will be `picoCTF{4096}`.
+
+### Hint
+A function can be referenced by either its name or its starting address in gdb.
+
+### Solution
+#### What we got ?
+- This problem has a difference, since the `debugger` file is a ELF 64-bit LSB file (check by using `file` command). It shows that the file is a 64-bit LSB executable in the ELF format, and it has not been stripped of its debugging information.
+
+    ![LSB](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/GDB%20Baby/baby4-1.png?raw=true)
+
+#### How to get the flag
+- Try to disassemble `main`, we find out at address `0x401142 <+38>`, the `func1` is called.
+
+    ![main](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/GDB%20Baby/baby-2.png?raw=true)
+
+- Next, try to disassemble `func1`, at address `0x01114 <+14>`, it has the line `imul eax,eax,0x3269`, which means multiple eax by `0x3269`. Base on the description, `0x3269` is the constant hex value we need to find. Decode this val to get the flag.
+
+    ![func1](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/GDB%20Baby/baby4-3.png?raw=true)
