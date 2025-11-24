@@ -17,7 +17,7 @@
 | weirdSnake | python bytecode, decompile | | Windows, Linux |
 | WinAntiDbg0x100 | Anti-debug | IDA, x32dbg | Windows |
 | WinAntiDbg0x200 | Anti-debug | IDA, x32dbg | Windows |
-| WinAntiDbg0x300 | Anti-debug, Binary patching | IDA, x32dbg, HxD | Windows |
+| WinAntiDbg0x300 | Anti-debug, Binary patching | IDA, x32dbg, HxD, DIE | Windows |
 
 
 
