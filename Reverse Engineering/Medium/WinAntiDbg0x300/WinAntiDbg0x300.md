@@ -184,7 +184,7 @@ Our second wall is `EnableDebugPrivilege` (original name is `sub_401267`) which 
 
 ![alt text](image-12.png)
 
-Replace the opcodes with `90` (which is `nop`). Reopen the program in `IDA`, we see that it is disappered now :D.
+Replace the opcodes with `90` (which is `nop`). Reopen the program in `IDA`, we see that it is disappeared now :D.
 
 ![alt text](image-13.png)
 
@@ -268,6 +268,7 @@ We can verify the change by reopen it in `IDA`.
 Now run `WinAntiDbg0x300_unpacked.exe` in `x32dbg` and we got our flag `picoCTF{Wind0ws_antid3bg_0x300_daad7155}`.
 
 ![alt text](image-24.png)
+
 
 
 
