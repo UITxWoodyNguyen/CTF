@@ -19,7 +19,7 @@
 | WinAntiDbg0x200 | Anti-debug | IDA, x32dbg | Windows |
 | WinAntiDbg0x300 | Anti-debug, Binary patching | IDA, x32dbg, HxD, DIE | Windows |
 | GDB Baby (1,2,3,4) | Disassemble, Cryptography | IDA, gdb, shell | Windows, Linux |
-| Bit-O-Asm (1,2,,4) | Assembly Reading Foundation | | Try it if you know how to code! |
+| Bit-O-Asm (1,2,3,4) | Assembly Reading Foundation | | Try it if you know how to code! |
 
 
 
