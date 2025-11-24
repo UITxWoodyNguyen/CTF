@@ -190,7 +190,7 @@ Replace the opcodes with `90` (which is `nop`). Reopen the program in `IDA`, we 
 
 ![alt text](image-14.png)
 
-Continue examining the code, we found that it starts a thread named `StartAddress`, we will look into it. We found that it calls `sub_40122B` (which is `ComputeHash`) one time and then run the detection code (which is an infinity loop). This tricks our decompiler to into believing that this function will never ends, therefore not decompiling the remaining part of the function. Here is that part (below the decompiled `StartAddress_0`).
+Continue examining the code, we found that it starts a thread named `StartAddress`, we will look into it. We found that it calls `sub_40122B` (which is `ComputeHash`) one time and then run the detection code (which is an infinity loop). This tricks our decompiler to into believing that this function will never end, therefore not decompiling the remaining part of the function. Here is that part (below the decompiled `StartAddress_0`).
 
 ```c
 void __stdcall __noreturn StartAddress_0(int a1)
@@ -268,6 +268,7 @@ We can verify the change by reopen it in `IDA`.
 Now run `WinAntiDbg0x300_unpacked.exe` in `x32dbg` and we got our flag `picoCTF{Wind0ws_antid3bg_0x300_daad7155}`.
 
 ![alt text](image-24.png)
+
 
 
 
