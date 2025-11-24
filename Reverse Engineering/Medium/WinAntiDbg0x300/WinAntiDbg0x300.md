@@ -22,7 +22,7 @@ This will take ~30 mins to install any missing DLLs.
 
 ## Solution:
 
-Open `WinAntiDbg0x300.exe` in DIE, we see that it is packed with `UPX`.
+Open `WinAntiDbg0x300.exe` in `DIE`, we see that it is packed with `UPX`.
 
 ![alt text](image.png)
 
@@ -268,3 +268,4 @@ We can verify the change by reopen it in `IDA`.
 Now run `WinAntiDbg0x300_unpacked.exe` in `x32dbg` and we got our flag `picoCTF{Wind0ws_antid3bg_0x300_daad7155}`.
 
 ![alt text](image-24.png)
+
