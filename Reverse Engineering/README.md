@@ -18,6 +18,7 @@
 | WinAntiDbg0x100 | Anti-debug | IDA, x32dbg | Windows |
 | WinAntiDbg0x200 | Anti-debug | IDA, x32dbg | Windows |
 | WinAntiDbg0x300 | Anti-debug, Binary patching | IDA, x32dbg, HxD, DIE | Windows |
+| GDB Baby (1,2,3,4) | Disassemble, Cryptography | IDA, gdb, shell | Windows, Linux |
 
 
 
