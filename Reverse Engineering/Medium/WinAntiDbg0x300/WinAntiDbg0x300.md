@@ -249,7 +249,7 @@ So in order to get the flag, we have to prevent the loop from starting. Base on 
 
 ![alt text](image-16.png)
 
-We see that in `loc_4037C0` there are 2 arrows pointing at it, one from above and one from below, suggests that this is indeed the infinity loop. Base on the graph, we know that the red line points to the loop execution. So we modify `mov eax, 1` to `mov eax, 0` so that it can exist the loop.
+We see that in `loc_4037C0` there are 2 arrows pointing at it, one from above and one from below, suggests that this is indeed the infinity loop. Base on the graph, we know that the red line points to the loop execution. So we modify `mov eax, 1` to `mov eax, 0` so that it can exist the loop because `eax` = 0 -> `test eax, eax` = `eax & eax` = `0` -> `jz` is triggered.
 
 ![alt text](image-17.png)
 
@@ -268,10 +268,3 @@ We can verify the change by reopen it in `IDA`.
 Now run `WinAntiDbg0x300_unpacked.exe` in `x32dbg` and we got our flag `picoCTF{Wind0ws_antid3bg_0x300_daad7155}`.
 
 ![alt text](image-24.png)
-
-
-
-
-
-
-
