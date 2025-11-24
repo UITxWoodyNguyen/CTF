@@ -139,17 +139,17 @@ void __cdecl DecryptFlag(unsigned __int8 *key)
 }
 ```
 
-We make a guess that this have something to do with the earlier `ComputeHash` function. We assume that it will take in a key that is likely the `HASH` computed after a number of time that `ComputeHash` gets called and use it to decrypt the flag. Double click on the variable `FLAG_SIZE`, we found that it is located near both `FLAG` and `HASH`, which reinforce our guess.
+We make a guess that this have something to do with the earlier `ComputeHash` function. We assume that it will take in a key that is likely the `HASH` computed after a number of time that `ComputeHash` gets called and use it to decrypt the flag. Double click on the variable `FLAG_SIZE`, we found that it is located near both `FLAG` and `HASH`, which reinforces our guess.
 
 ![alt text](image-3.png)
 
-So our tatic is avoid stopping `ComputeHash` from running and bypass all the checks. We will go from top to down, our first wall is `DetectDebuggerAtLaunch`, which has the original name `sub_401276`. We will make this return 0 regardless of the function behavior. Since this function wraps another function `sub_402D00`, which contains the detection code, go to `sub_402D00` and scroll to the bottom, we will take opcode `32 C0 EB 02 B0 01 8B E5 5D C3` from IDA and search for it in `HxD`. We found it at `0x216E` (since it is the only address that near `0x2D00`)
+So our tatic is to avoid stopping `ComputeHash` from running and bypass all the checks. We will go from top to down, our first wall is `DetectDebuggerAtLaunch`, which has the original name `sub_401276`. We will make this return `0` regardless of the function behavior. Since this function wraps another function `sub_402D00`, which contains the detection code, go to `sub_402D00` and scroll to the bottom, we will take opcode `32 C0 EB 02 B0 01 8B E5 5D C3` from IDA and search for it in `HxD`. We found it at `0x216E` (since it is the only address that near `0x2D00`)
 
 ![alt text](image-7.png)
 
 ![alt text](image-10.png)
 
-We will patch from `C3`, replace it with `B8 00 00 00 00 C3` (which is `mov eax, 0 ret`) to make it always returns 0 then press `Ctrl + S` to save the changes.
+We will patch from `C3`, replace it with `B8 00 00 00 00 C3` (which is `mov eax, 0 ret`) to make it always returns `0` then press `Ctrl + S` to save the changes.
 
 ![alt text](image-8.png)
 
@@ -178,7 +178,7 @@ int sub_402D00()
 }
 ```
 
-Our second wall is `EnableDebugPrivilege` (original name is `sub_401267`) which will stop the program from running if the debugger is not started in `Administrator mode`. Although this is not a detection, but it annoys me to we will patch it by noping it out so that the function can't run. Go to function `_WinMain@16_0` and search for `sub_401267`. We will take opcode `E8 56 EA FF FF` from IDA and search for it in `HxD`.
+Our second wall is `EnableDebugPrivilege` (original name is `sub_401267`) which will stop the program from running if the debugger is not started in `Administrator mode`. Although this is not a detection, but it annoys me so we will patch it by noping it out so that the function can't run. Go to function `_WinMain@16_0` and search for `sub_401267`. We will take opcode `E8 56 EA FF FF` from IDA and search for it in `HxD`.
 
 ![alt text](image-11.png)
 
@@ -190,7 +190,7 @@ Replace the opcodes with `90` (which is `nop`). Reopen the program in `IDA`, we 
 
 ![alt text](image-14.png)
 
-Continue examining the code, we found that it starts a thread named `StartAddress`, we will look into it. We found that it calls `sub_40122B` (which is `ComputeHash`) one time and then run the detection code (which is an infinity loop). This tricks our decompiler to into believing that this function will never ends, therefore not decompile the remaining part of the function. Here is that part (below the decompiled `StartAddress_0`).
+Continue examining the code, we found that it starts a thread named `StartAddress`, we will look into it. We found that it calls `sub_40122B` (which is `ComputeHash`) one time and then run the detection code (which is an infinity loop). This tricks our decompiler to into believing that this function will never ends, therefore not decompiling the remaining part of the function. Here is that part (below the decompiled `StartAddress_0`).
 
 ```c
 void __stdcall __noreturn StartAddress_0(int a1)
@@ -249,7 +249,7 @@ So in order to get the flag, we have to prevent the loop from starting. Base on 
 
 ![alt text](image-16.png)
 
-We see that in `loc_4037C0` there are 2 arrows pointing at it, one from above and one from below, suggests that this is indeed the infinity loop. Base one the graph, we know that the red line points to the loop execution. So we modify `mov eax, 1` to `mov eax, 0` so that it can exist the loop.
+We see that in `loc_4037C0` there are 2 arrows pointing at it, one from above and one from below, suggests that this is indeed the infinity loop. Base on the graph, we know that the red line points to the loop execution. So we modify `mov eax, 1` to `mov eax, 0` so that it can exist the loop.
 
 ![alt text](image-17.png)
 
