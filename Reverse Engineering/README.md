@@ -20,6 +20,10 @@
 | WinAntiDbg0x300 | Anti-debug, Binary patching | IDA, x32dbg, HxD, DIE | Windows |
 | GDB Baby (1,2,3,4) | Disassemble, Cryptography | IDA, gdb, shell | Windows, Linux |
 | Bit-O-Asm (1,2,3,4) | Assembly Reading Foundation | | Try it if you know how to code! |
+| Ascii FTW | Decompile, Assembly, Cryptography | IDA, gdb, shell | Windows, Linux |
+| Virtual Machine 0 | Reading 3D file, mathematics, python | 3D Reading | Try it if you know how to count and basic maths |
+| Timer | APK Decompile | apktools, shell | Linux |
+| Safe Opener 2| Java Decompile | | Windows, Linux |
 
 
 
