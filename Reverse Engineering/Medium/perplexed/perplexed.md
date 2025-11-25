@@ -33,9 +33,9 @@ No hint
 - First, check the `info functions` and try disassembling the `check()` with `gdb` :
 > Remember to set the `disassembly-flavor` into `intel`, instead of its default flavor `AT&T`
 
-    ![Info]()
+    ![Info](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/perplexed/perp1.png?raw=true)
 
-    ![Asm]()
+    ![Asm](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/perplexed/perp2.png?raw=true)
 
 - Base on this code:
 
