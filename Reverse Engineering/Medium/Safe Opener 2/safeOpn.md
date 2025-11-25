@@ -13,7 +13,7 @@ Download and try to decompile the file.
 
 ### Solution
 #### What we got ?
-- We got a `.class` file, so I try to decompile it with http://www.javadecompilers.com/. After decompiling, we will have [decompile.java]()
+- We got a `.class` file, so I try to decompile it with http://www.javadecompilers.com/. After decompiling, we will have [decompile.java](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Safe%20Opener%202/decompile.java)
 
 #### How to get the flag ?
 - Check the `openSafe()` function, we will find out the flag:
