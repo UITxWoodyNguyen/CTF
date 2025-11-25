@@ -1,0 +1,59 @@
+Dump of assembler code for function main:
+   0x00000000004012a5 <+0>:	push   rbp
+   0x00000000004012a6 <+1>:	mov    rbp,rsp
+   0x00000000004012a9 <+4>:	sub    rsp,0x110
+   0x00000000004012b0 <+11>:	mov    QWORD PTR [rbp-0x110],0x0
+   0x00000000004012bb <+22>:	mov    QWORD PTR [rbp-0x108],0x0
+   0x00000000004012c6 <+33>:	mov    QWORD PTR [rbp-0x100],0x0
+   0x00000000004012d1 <+44>:	mov    QWORD PTR [rbp-0xf8],0x0
+   0x00000000004012dc <+55>:	mov    QWORD PTR [rbp-0xf0],0x0
+   0x00000000004012e7 <+66>:	mov    QWORD PTR [rbp-0xe8],0x0
+   0x00000000004012f2 <+77>:	mov    QWORD PTR [rbp-0xe0],0x0
+   0x00000000004012fd <+88>:	mov    QWORD PTR [rbp-0xd8],0x0
+   0x0000000000401308 <+99>:	mov    QWORD PTR [rbp-0xd0],0x0
+   0x0000000000401313 <+110>:	mov    QWORD PTR [rbp-0xc8],0x0
+   0x000000000040131e <+121>:	mov    QWORD PTR [rbp-0xc0],0x0
+   0x0000000000401329 <+132>:	mov    QWORD PTR [rbp-0xb8],0x0
+   0x0000000000401334 <+143>:	mov    QWORD PTR [rbp-0xb0],0x0
+   0x000000000040133f <+154>:	mov    QWORD PTR [rbp-0xa8],0x0
+   0x000000000040134a <+165>:	mov    QWORD PTR [rbp-0xa0],0x0
+   0x0000000000401355 <+176>:	mov    QWORD PTR [rbp-0x98],0x0
+   0x0000000000401360 <+187>:	mov    QWORD PTR [rbp-0x90],0x0
+   0x000000000040136b <+198>:	mov    QWORD PTR [rbp-0x88],0x0
+   0x0000000000401376 <+209>:	mov    QWORD PTR [rbp-0x80],0x0
+   0x000000000040137e <+217>:	mov    QWORD PTR [rbp-0x78],0x0
+   0x0000000000401386 <+225>:	mov    QWORD PTR [rbp-0x70],0x0
+   0x000000000040138e <+233>:	mov    QWORD PTR [rbp-0x68],0x0
+   0x0000000000401396 <+241>:	mov    QWORD PTR [rbp-0x60],0x0
+   0x000000000040139e <+249>:	mov    QWORD PTR [rbp-0x58],0x0
+   0x00000000004013a6 <+257>:	mov    QWORD PTR [rbp-0x50],0x0
+   0x00000000004013ae <+265>:	mov    QWORD PTR [rbp-0x48],0x0
+   0x00000000004013b6 <+273>:	mov    QWORD PTR [rbp-0x40],0x0
+   0x00000000004013be <+281>:	mov    QWORD PTR [rbp-0x38],0x0
+   0x00000000004013c6 <+289>:	mov    QWORD PTR [rbp-0x30],0x0
+   0x00000000004013ce <+297>:	mov    QWORD PTR [rbp-0x28],0x0
+   0x00000000004013d6 <+305>:	mov    QWORD PTR [rbp-0x20],0x0
+   0x00000000004013de <+313>:	mov    QWORD PTR [rbp-0x18],0x0
+   0x00000000004013e6 <+321>:	mov    edi,0x402010
+   0x00000000004013eb <+326>:	mov    eax,0x0
+   0x00000000004013f0 <+331>:	call   0x401050 <printf@plt>
+   0x00000000004013f5 <+336>:	mov    rdx,QWORD PTR [rip+0x2c34]        # 0x404030 <stdin@GLIBC_2.2.5>
+   0x00000000004013fc <+343>:	lea    rax,[rbp-0x110]
+   0x0000000000401403 <+350>:	mov    esi,0x100
+   0x0000000000401408 <+355>:	mov    rdi,rax
+   0x000000000040140b <+358>:	call   0x401060 <fgets@plt>
+   0x0000000000401410 <+363>:	lea    rax,[rbp-0x110]
+   0x0000000000401417 <+370>:	mov    rdi,rax
+   0x000000000040141a <+373>:	call   0x401156 <check>
+   0x000000000040141f <+378>:	mov    DWORD PTR [rbp-0x4],eax
+   0x0000000000401422 <+381>:	cmp    DWORD PTR [rbp-0x4],0x1
+   0x0000000000401426 <+385>:	jne    0x401439 <main+404>
+   0x0000000000401428 <+387>:	mov    edi,0x402025
+   0x000000000040142d <+392>:	call   0x401030 <puts@plt>
+   0x0000000000401432 <+397>:	mov    eax,0x1
+   0x0000000000401437 <+402>:	jmp    0x401448 <main+419>
+   0x0000000000401439 <+404>:	mov    edi,0x40202e
+   0x000000000040143e <+409>:	call   0x401030 <puts@plt>
+   0x0000000000401443 <+414>:	mov    eax,0x0
+   0x0000000000401448 <+419>:	leave
+   0x0000000000401449 <+420>:	ret
