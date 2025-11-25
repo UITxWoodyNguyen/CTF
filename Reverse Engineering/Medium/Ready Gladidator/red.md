@@ -56,15 +56,34 @@ end
 ```
 - Connect to the server to play and get the flag:
 
-    ![Flag]()
+    ![Flag](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Ready%20Gladidator/red1.png?raw=true)
 
 ---
 ## Part 2
 ### Hint
-
+If your warrior is close, try again, it may work on subsequent tries... why is that?
 
 ### Solution
 #### What we got ?
-
+Same as Part 1.
 
 #### How to get the flag ?
+- Using `jmp` to win:
+    ```red
+    ;redcode
+    ;name Imp Ex
+    ;assert 1
+
+    jmp 0,<-2
+
+    end
+    ```
+- The line we use means "jump unconditionally.":
+
+    - `0` is the `A-field`, often used as an offset or ignored depending on addressing mode.
+    - `<-2` is the `B-field` (here in relative addressing).
+    - So we use this line jump back two instructions from the current one.
+- Since our code is only one instruction between `jmp` and `end`, this effectively makes an infinite loop, creating an Imp (a classic Core War pattern):
+
+    - In Core War, an `Imp` is a small program that keeps moving through memory endlessly, "imp-ing" around the core.
+    - The `jmp` keeps the instruction pointer moving, letting it survive without doing anything else.
