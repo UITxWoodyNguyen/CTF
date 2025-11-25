@@ -25,21 +25,22 @@
     rabin2 -S <file_name.exe>
     ```
 
-    ![rabin2]()
+    ![rabin2](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Binary%20Instrumention/bin1.png?raw=true)
+
 - We can see from the result, the binary file has 7 sections. However, the `.ATOM` is suspicious since we typically don't see in windows portable executables.
 
 #### How to get the flag ?
 - First, using `binwalk` to get the unpacked executable. The result shows that we can see some compressed data at addr `0x6000`, which is the same as `.ATOM`.
 
-    ![binwalk]()
+    ![binwalk](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Binary%20Instrumention/bin11.png?raw=true)
 
 - Change directory after unpackaging, we will find the file `6000`. Using `file` to check it, we can see it contains 6 sections, so we can assume that it's safe to proceed thinking its unpacked.
 
-    ![strings]()
+    ![strings](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Binary%20Instrumention/bin12.png?raw=true)
 
 - Using `strings` to see the contents, and `egrep` for the flag. We will find a line contains `base64` data, try decode to get the correct flag.
 
-    ![flag]()
+    ![flag](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Binary%20Instrumention/bin13.png?raw=true)
 
 ---
 ## Part 2
@@ -52,7 +53,7 @@
 #### What we got ?
 Same as Part 1.
 
-    ![P1]()
+    ![P1](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Binary%20Instrumention/bin2.png?raw=true)
 
 #### How to get the flag ?
 - Same as Part 1. However, we cannot using `egrep` since there is no signal like `flag` or `picoCTF` to find. Check the src file we will find this line :
@@ -64,4 +65,4 @@ Same as Part 1.
     ```
 - Try do decode with base64 to get the final flag. 
 
-    ![Flag]()
+    ![Flag](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Binary%20Instrumention/bin21.png?raw=true)
