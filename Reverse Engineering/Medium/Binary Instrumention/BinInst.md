@@ -53,7 +53,7 @@
 #### What we got ?
 Same as Part 1.
 
-    ![P1](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Binary%20Instrumention/bin2.png?raw=true)
+![](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/Binary%20Instrumention/bin2.png?raw=true)
 
 #### How to get the flag ?
 - Same as Part 1. However, we cannot using `egrep` since there is no signal like `flag` or `picoCTF` to find. Check the src file we will find this line :
