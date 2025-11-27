@@ -24,6 +24,8 @@
 | Virtual Machine 0 | Reading 3D file, mathematics, python | 3D Reading | Try it if you know how to count and basic maths |
 | Timer | APK Decompile | apktools, shell | Linux |
 | Safe Opener 2| Java Decompile | | Windows, Linux |
+| Unpackme (py, upx) | Packing, decompile, python | UPX, IDA, Ghidra | Windows, Linux |
+| | | | |
 
 
 
@@ -33,3 +35,4 @@
 | Keygenme | Crypto | IDA | Windows |
 | Wizardlike | Binary patching | IDA, HxD | Windows |
 | not-crypto | Crypto | IDA | Window, Linux |
+| breadth | Binary Comparison, Decompile | IDA, Ghidra | Linux |
