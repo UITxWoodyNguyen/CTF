@@ -33,9 +33,9 @@ What is UPX
 
     end
     ```
-    
-    ![hex]()
+
+    ![hex](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/unpackme-upx/unp1.png?raw=true)
 
 - Convert it into decimal value, we will get the correct answer of the question. Type it and get the flag.
 
-    ![flag]()
+    ![flag](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Medium/unpackme-upx/unp2.png?raw=true)
