@@ -17,7 +17,7 @@
 | weirdSnake | python bytecode, decompile | | Windows, Linux |
 | WinAntiDbg0x100 | Anti-debug | IDA, x32dbg | Windows |
 | WinAntiDbg0x200 | Anti-debug | IDA, x32dbg | Windows |
-| WinAntiDbg0x300 | Anti-debug, Binary patching | IDA, x32dbg, HxD, DIE | Windows |
+| WinAntiDbg0x300 | Anti-debug, Binary patching | IDA, x64dbg, HxD, DIE | Windows |
 | GDB Baby (1,2,3,4) | Disassemble, Cryptography | IDA, gdb, shell | Windows, Linux |
 | Bit-O-Asm (1,2,3,4) | Assembly Reading Foundation | | Try it if you know how to code! |
 | Ascii FTW | Decompile, Assembly, Cryptography | IDA, gdb, shell | Windows, Linux |
@@ -44,3 +44,6 @@
 - Binary Operations: https://book.rada.re/tools/radiff2/datadiff.html
 - Decoding/Encoding: https://gchq.github.io/CyberChef/
 - Decompiling Online (usable for file's memory less than **2MB**): https://dogbolt.org
+- HxD: https://mh-nexus.de/en/downloads.php?product=HxD20
+- IDA: https://hex-rays.com/pricing?section=individuals
+- x32/x64dbg: https://x64dbg.com/
