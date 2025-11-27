@@ -14,7 +14,7 @@ None
 ### Solution
 #### What we got ?
 - The problem gives us a binary file. Using `file` to check its type, we will find out it a ELF 64-bit LSB file. But looking closely, its type contain `RVC`, which means the compressed instructions can be seen but in a smaller version. Moreover, it is hardly to be reverse disassembly manually.
-- So, try to use Ghidra to decompile it, we will receive the src code: [`decompile.c`]()
+- So, try to use Ghidra to decompile it, we will receive the src code: [`decompile.c`](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Hard/riscy%20business/decompile.c)
 - Looking closely to this code, we will find 2 functions `FUN_00010078()` and `FUN_00010080()` implement the RC4 Key Scheduling Algorithm (KSA):
 
     ```c
