@@ -36,3 +36,11 @@
 | Wizardlike | Binary patching | IDA, HxD | Windows |
 | not-crypto | Crypto | IDA | Window, Linux |
 | breadth | Binary Comparison, Decompile | IDA, Ghidra | Linux |
+
+## RE Resources
+- GDB Tools:
+  - https://ctf101.org/reverse-engineering/what-is-gdb/
+  - https://www.tutorialspoint.com/gnu_debugger/index.htm
+- Binary Operations: https://book.rada.re/tools/radiff2/datadiff.html
+- Decoding/Encoding: https://gchq.github.io/CyberChef/
+- Decompiling Online (usable for file's memory less than **2MB**): https://dogbolt.org
