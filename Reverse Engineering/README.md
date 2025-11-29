@@ -36,6 +36,7 @@
 | Wizardlike | Binary patching | IDA, HxD | Windows |
 | not-crypto | Crypto | IDA | Window, Linux |
 | breadth | Binary Comparison, Decompile | IDA, Ghidra | Linux |
+| MATRIX | VM | IDA | Windows |
 
 ## RE Resources
 - GDB Tools:
