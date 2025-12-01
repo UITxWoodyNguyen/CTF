@@ -31,6 +31,9 @@ Can you figure out what changed between the address you found locally and in the
 #### How to get the flag ?
 - First decompile the file in IDA and check the "Export" tab, we will find all the address of each functions. Check the `win`, its address is `00000000000012a7`. 
 - However, when run the page via netcat, the address of main we receive is `0x5f7958d7133d`, which is not the same as the address in IDA.
+
+    ![Add](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/PIE/Screenshot%202025-12-01%20135721.png?raw=true)
+
 - So we can find out the pattern of address is `0x5f7958d7XYZT`. Replace `XYZT` with `12a7` to get flag.
 
-    ![Flag]()
+    ![Flag](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/PIE/Screenshot%202025-12-01%20135500.png?raw=true)
