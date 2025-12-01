@@ -9,7 +9,7 @@
 | ----- |-----| ---- | ---- |
 | PIE | Decompile | IDA | Windows, Linux |
 | Heap 0 | Buffer overflow | | Windows, Linux |
-| format string 0 | Buffer overflow | | Windows, Linux |
+| format string 0 | Buffer overflow | pwntool | Windows, Linux |
 
 ### Level: Medium
 | Problem  | About | Tools | System |
