@@ -10,7 +10,6 @@
 | PIE | Decompile | IDA | Windows, Linux |
 | Heap 0 | Buffer overflow | | Windows, Linux |
 | format string 0 | Buffer overflow | | Windows, Linux |
-| Input Injection (1,2) | Buffer Overflow, shell | | Windows, Linux |
 
 ### Level: Medium
 | Problem  | About | Tools | System |
