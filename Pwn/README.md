@@ -14,6 +14,6 @@
 ### Level: Medium
 | Problem  | About | Tools | System |
 | ----- |-----| ---- | ---- |
-| Input Injection (1,2) | Buffer Overflow, shell | | Windows, Linux |
+| Input Injection (1,2) | Buffer Overflow, shell | pwntool | Windows, Linux |
 
 ## Pwn Resources
