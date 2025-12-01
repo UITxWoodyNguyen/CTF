@@ -18,7 +18,7 @@ Connect with the server via `nc mimas.picoctf.net <PORT>`
 
 #### What we got?
 - The problem give us a binary file and a page. Try connect to the page via netcat, we found there are 3 input options.
-- Moreover, check the src [`string0.c`](), we can see that the count check is based on printed character. 
+- Moreover, check the src [`string0.c`](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/format%20string%200/string0.c), we can see that the count check is based on printed character. 
     ```c
     if (count > 2 * BUFSIZE) {
         serve_bob();
@@ -27,4 +27,4 @@ Connect with the server via `nc mimas.picoctf.net <PORT>`
 
 #### How to get the flag ?
 - The value of `BUFSIZE` is only 32. So we can use buffer overflow to crack this problem by using an input with the length over than 64.
-    ![Flag]()
+    ![Flag](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/format%20string%200/Screenshot%202025-12-01%20153200.png?raw=true)
