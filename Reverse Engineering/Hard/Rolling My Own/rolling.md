@@ -1,4 +1,4 @@
-# breadth
+# Rolling My Own
 
 ### Information
 * Category: RE
@@ -343,4 +343,4 @@ Connect to server via `nc mercury.picoctf.net 57112`
 
 - Brute force to get the password and flag:
     
-    ![Flag]()
+    ![Flag](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Hard/Rolling%20My%20Own/Screenshot%202025-12-01%20121103.png?raw=true)
