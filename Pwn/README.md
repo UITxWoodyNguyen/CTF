@@ -10,6 +10,10 @@
 | PIE | Decompile | IDA | Windows, Linux |
 | Heap 0 | Buffer overflow | | Windows, Linux |
 | format string 0 | Buffer overflow | | Windows, Linux |
+| Input Injection (1,2) | Buffer Overflow, shell | | Windows, Linux |
 
 
 ## Pwn Resources
+| Problem  | About | Tools | System |
+| ----- |-----| ---- | ---- |
+| Input Injection (1,2) | Buffer Overflow, shell | | Windows, Linux |
