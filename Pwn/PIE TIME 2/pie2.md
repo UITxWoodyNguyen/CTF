@@ -3,7 +3,7 @@
 ### Information
 * Category: Pwn
 * Point:
-* Level: Easy
+* Level: Medium
 
 ### Description
 Can you try to get the flag? I'm not revealing anything anymore!! Connect to the program with netcat:
@@ -78,7 +78,7 @@ Can you try to get the flag? I'm not revealing anything anymore!! Connect to the
     }
     ```
 
-    - The code includes 3 function: `main()`, `win()` and `call_functions()`. It ask for our name, which takes about 64 bits, then print it to `stdout` and prompts us for the address to call (same as [PIE]()).
+    - The code includes 3 function: `main()`, `win()` and `call_functions()`. It ask for our name, which takes about 64 bits, then print it to `stdout` and prompts us for the address to call (same as [PIE](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/PIE/pie.md)).
     - Moreover, looking closely, after getting our name, the code will print directly the input by using `printf()`, which can cause **format string vulnerability**. 
     - So instead of using regular character for input, we will use `%p` to leak the value address. 
 
@@ -86,19 +86,19 @@ Can you try to get the flag? I'm not revealing anything anymore!! Connect to the
 - First, try decompile the binary file given from the problem by using Ghidra tools.
 - We can see, `main()` is started at address `0x...400`. The address of `call_functions()` and `win()` is `0x...2c7` and `0x...36a`, respectively:
 
-    ![main]()
+    ![main](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/PIE%20TIME%202/Screenshot%202025-12-02%20201215.png?raw=true)
 
-    ![call_func]()
+    ![call_func](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/PIE%20TIME%202/Screenshot%202025-12-02%20201434.png?raw=true)
 
-    ![win]()
+    ![win](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/PIE%20TIME%202/Screenshot%202025-12-02%20201450.png?raw=true)
 
 - First, try disassemble the `main` with GDB, we observed that the pattern of an address will be `0x555555555abc`.
 
-    ![dis]()
+    ![dis](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/PIE%20TIME%202/Screenshot%202025-12-02%20204031.png?raw=true)
 
 - Run the program locally and base on the analyze above, we will use a 64 bytes input with all `"%p"`. And the program return to a list of address. Looking closely, we can find the address `0x555555555441`, which is in the `main()`.
 
-    ![add]()
+    ![add](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/PIE%20TIME%202/Screenshot%202025-12-02%20203919.png?raw=true)
 
 - Try a little counting, this value is at position **19** in this input. So instead of a 64 bytes string for input, we can use `%19$p` to get exactly the address we need. Breakdown:
 
@@ -109,8 +109,8 @@ Can you try to get the flag? I'm not revealing anything anymore!! Connect to the
 
 - Using this pattern and replace `abc` with `36a`, we can see that the program return to the win result
 
-    ![win]()
+    ![win](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/PIE%20TIME%202/Screenshot%202025-12-02%20203934.png?raw=true)
 
 - So base on the local test, try the same when connecting to the server via netcat, and we will receive the flag.
 
-    ![Flag]()
+    ![Flag](https://github.com/UITxWoodyNguyen/CTF/blob/main/Pwn/PIE%20TIME%202/Screenshot%202025-12-02%20203940.png?raw=true)
