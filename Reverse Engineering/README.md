@@ -48,3 +48,8 @@
 - HxD: https://mh-nexus.de/en/downloads.php?product=HxD20
 - IDA: https://hex-rays.com/pricing?section=individuals
 - x32/x64dbg: https://x64dbg.com/
+
+## RE Theory and Breakdowns
+- Difference at offset in decompiling: https://github.com/UITxWoodyNguyen/CTF/blob/main/18%2B_Notes/differOffset.md
+- Core Wars: https://github.com/UITxWoodyNguyen/CTF/blob/main/18%2B_Notes/CoreWars.md
+- Anti-Disassemble Method: https://github.com/UITxWoodyNguyen/CTF/blob/main/18%2B_Notes/Anti-Disasembling.md
