@@ -15,5 +15,7 @@
 | Problem  | About | Tools | System |
 | ----- |-----| ---- | ---- |
 | Input Injection (1,2) | Buffer Overflow, shell | pwntool | Windows, Linux |
+| PIE TIME 2 | Format String Injection | Ghidra, GDB | Windows, Linux |
 
 ## Pwn Resources
+
