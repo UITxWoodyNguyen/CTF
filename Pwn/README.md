@@ -16,6 +16,7 @@
 | ----- |-----| ---- | ---- |
 | Input Injection (1,2) | Buffer Overflow, shell | pwntool | Windows, Linux |
 | PIE TIME 2 | Format String Injection | Ghidra, GDB | Windows, Linux |
+| hash-only | Shell Interactive | Ghidra, IDA | Win, Linux |
 
 ## Pwn Resources
 
