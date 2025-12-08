@@ -16,7 +16,7 @@ How is the password being checked?
 - The problem gives us a ELF 64-bit LSB file. 
 - Try to run the file by using `./checkpass <password>` base on it usage, with the input is `abc`, it returns `Invalid Length`. So we observed that, this checker require a target of password's length to do the checking process.
 
-    ![Check]()
+    ![Check](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Hard/Checkpass/Screenshot%202025-12-08%20222209.png?raw=true)
 
 ### Analyzing
 - We will use IDA to decompile the binary, and checking the `main`, we can see that it contains only 2 functions, which is `sub_5960()` and `sub_226C0`:
@@ -342,3 +342,5 @@ if __name__ == "__main__":
 ```
 
 - The flag is `picoCTF{t1mingS1deChann3l_FavOTiQpAeQuh7}`
+
+    ![Success](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/Hard/Checkpass/Screenshot%202025-12-08%20224046.png?raw=true)
