@@ -218,6 +218,9 @@ Within Vault 8707 are located master keys used to access any vault in the countr
     ```
     UUURFURURRFRRFFUUFURRUFUFFRFUFUUUUFFRRUUUFURFDFFUFFRRRRRFRR
     ```
+
+    ![Path](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/HTB/CTF%20Try%20out/TunnelMadness/Screenshot%202025-12-09%20234423.png?raw=true)
+
 - Tạo thêm 1 script kết nối với server của bài cung cấp và input bằng file `.txt` lưu path trên, ta dễ dàng tìm được flag:
 
     ```python
@@ -265,4 +268,4 @@ Within Vault 8707 are located master keys used to access any vault in the countr
 
 - Kết quả:
 
-    ![Flag]()
+    ![Flag](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/HTB/CTF%20Try%20out/TunnelMadness/Screenshot%202025-12-09%20234448.png?raw=true)
