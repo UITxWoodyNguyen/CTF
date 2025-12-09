@@ -24,7 +24,7 @@ The team stumbles into a long-abandoned casino. As you enter, the lights and mus
 
 - Thực hiện decompile file binary gốc để tìm giá trị của `check[]`, ta tìm được kết quả sau:
 
-    ![check]()
+    ![check](https://github.com/UITxWoodyNguyen/CTF/blob/main/Reverse%20Engineering/HTB/CTF%20Try%20out/FlagCasino/Screenshot%202025-12-09%20101841.png?raw=true)
 
 - Từ đó, ta có script cụ thể:
     ```python
