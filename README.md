@@ -6,6 +6,6 @@
 | Files  | Contents |
 | :------------: |:-------------:|
 | 18+_Notes      | Some Notes     |
-| Reverse Engineering | CTF writeups from picoCTF.org about RE |
-| Cryptography | CTF writeups from picoCTF.org about Crypto |
-| Web Exp | CTF writeups from picoCTF.org about WebExp |
+| Reverse Engineering | CTF writeups about RE |
+| Cryptography | CTF writeups about Crypto |
+| Web Exp | CTF writeups about WebExp |
