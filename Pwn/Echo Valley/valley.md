@@ -130,6 +130,3 @@ But how do you make it respond with something more interesting, like a flag?
   
     ![Flag](https://www.notion.so/image/attachment%3Ad273fbd0-35e1-4089-b05f-95a48847546d%3Aimage.png?table=block&id=2c71b638-5371-8007-b7a3-d7a42a0493f6&spaceId=a781b638-5371-818f-8f7e-000357107d6a&width=1340&userId=&cache=v2)
 - Flag là **`picoctf{f1ckl3_f0rmat_f1asc0}`**  
-    ![image.png](attachment:d273fbd0-35e1-4089-b05f-95a48847546d:image.png)
-    
-- Flag là **`picoctf{f1ckl3_f0rmat_f1asc0}`**
