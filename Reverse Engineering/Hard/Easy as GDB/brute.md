@@ -254,7 +254,7 @@ int main() {
         0x6F, 0x36, 0x32, 0x62, 0x12, 0x16, 0x43, 0x34, 0x40, 0x3E, 
         0x58, 0x01, 0x58, 0x3F, 0x62, 0x3F, 0x53, 0x30, 0x6E, 0x17
     }; // aZNh taken from IDA
-    process_array(chars, sizeof(chars), -1);
+    process_array(chars, sizeof(chars), -1); // because the xor algorithm is forward in the program, we have to shuffle the data backward so that we can correctly decode it
     char* decoded = decode_string(chars, sizeof(chars));
 
     for (int i = 0; i < sizeof(chars); ++i) {
@@ -265,5 +265,6 @@ int main() {
     return 0;
 }
 ```
+
 
 Run it and we got our flag `picoCTF{I_5D3_A11DA7_358a9150}`.
