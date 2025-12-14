@@ -142,7 +142,7 @@ unsigned int __cdecl sub_7C2(char *src, unsigned int n, int a3)
       j_1 = j;
       if ( n <= j )
         break;
-      `sub_751``(src, n, j);
+      sub_751(src, n, j);
     }
   }
   return j_1;
@@ -268,3 +268,4 @@ int main() {
 
 
 Run it and we got our flag `picoCTF{I_5D3_A11DA7_358a9150}`.
+
