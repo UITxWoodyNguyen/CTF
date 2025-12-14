@@ -18,8 +18,11 @@
 | PIE TIME 2 | Format String Injection | Ghidra, GDB | Windows, Linux |
 | hash-only | Shell Interactive | Ghidra, IDA | Win, Linux |
 | babygame01 | Buffer Overflow | IDA | Windows |
+| Echo valley | String Format | Pwntools | Win, Linux |
+| Format string 1 | String format | Cyberchef | Win, Linux
 
 ## Pwn Resources
 
 ## Pwn Theory and Breakdowns
 - Format String Injection: https://github.com/UITxWoodyNguyen/CTF/blob/main/18%2B_Notes/stringFormat_inj.md
+- System And Netwwork Hacking: https://lettieri.iet.unipi.it/hacking/
