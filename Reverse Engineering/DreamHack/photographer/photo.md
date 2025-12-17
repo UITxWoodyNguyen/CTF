@@ -322,4 +322,4 @@
     
 - Chạy script trên, ta nhận được file `.bmp` gốc chứa flag:
     
-    ![image.png](attachment:e15663ae-c9a8-479e-a6b6-a9441987b28d:image.png)
+    ![image.png](https://www.notion.so/image/attachment%3Ae15663ae-c9a8-479e-a6b6-a9441987b28d%3Aimage.png?table=block&id=2cc1b638-5371-809b-ba3e-fce1add53665&spaceId=a781b638-5371-818f-8f7e-000357107d6a&width=1360&userId=&cache=v2)
