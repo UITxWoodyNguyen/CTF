@@ -64,7 +64,7 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 }
 ```
 
-Base on the code, we can calculate the padding between `v6` and `v7` (which is the map's base address), the padding is `3` (`0xA98` – `0xA9C` = `4`, `v6` takes 1 byte). So to modify `v6`, we have to do a buffer overflow attack by setting `v7 - 4` (this will overwrite `v6`) to a non-zero value. Inspecting `move_player`, we found out that it doesn't perform any boundary checks for the map, which is vulnerable to the attack we've mentioned. Moreover, it sets `(a1[1] + a3 + 90 * *a1)` (which is `x + map_base_address + 90y`) to the player's icon, which is non-zero already. Because our target is setting `map_base_address - 4` to non-zero, we will move the player to the position (-4, 0) so `v6` will hold the value `40` (which is our player's icon). We also found out some hidden commands, like `p` for auto finish the game, `l` for changing the player's icon.
+Base on the code, we can calculate the padding between `v6` and `v7` (which is the map's base address), the padding is `3` (`0xA98` – `0xA9C` = `4`, `v6` takes 1 byte). So to modify `v6`, we have to do a buffer underflow attack by setting `v7 - 4` (this will overwrite `v6`) to a non-zero value. Inspecting `move_player`, we found out that it doesn't perform any boundary checks for the map, which is vulnerable to the attack we've mentioned. Moreover, it sets `(a1[1] + a3 + 90 * *a1)` (which is `x + map_base_address + 90y`) to the player's icon, which is non-zero already. Because our target is setting `map_base_address - 4` to non-zero, we will move the player to the position (-4, 0) so `v6` will hold the value `40` (which is our player's icon). We also found out some hidden commands, like `p` for auto finish the game, `l` for changing the player's icon.
 
 ```c
 _BYTE *__cdecl move_player(_DWORD *a1, char a2, int a3)
@@ -98,5 +98,6 @@ _BYTE *__cdecl move_player(_DWORD *a1, char a2, int a3)
 ```
 
 So our final input will be `wwwwaaaaaaaap` (because our player's first position is (4, 4)). Submit it and we got our flag `picoCTF{gamer_m0d3_enabled_ec1f4e25}`.
+
 
 ![alt text](image.png)
