@@ -2,7 +2,7 @@
 ### Information
 * Category: Binary Exploit
 * Point: 400
-* Level: Medium
+* Level: Hard
 
 ### Description
 Break the game and get the flag.
@@ -238,4 +238,5 @@ p.sendline(b"a" * 71)
 p.sendline(b"wwww")
 
 p.interactive()
+
 ```
