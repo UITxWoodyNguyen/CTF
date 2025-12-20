@@ -214,7 +214,7 @@ At level `5`, we realize that we can't exit the loop because if we get to (89, 2
 .text:08049A08                 call    win
 ```
 
-However, the distance between `map` and `ebp + 4` is not `55` anymore due to us skipping the stack's cleanup. So there is `16` excess bytes, we need to include those in our distance. Here is our input for that `wwwwwaaaaaaaaaaasdddssssssddddddddww` + `l\xe5` + `a * 71` + `wwww`. Submit it and we got our flag `picoCTF{gamer_leveluP_334c3e00}`.
+However, the distance between `map` and `ebp + 4` is not `55` anymore due to us skipping the stack's cleanup. So there are `16` excess bytes, we need to include those in our distance. Here is our input for that `wwwwwaaaaaaaaaaasdddssssssddddddddww` + `l\xe5` + `a * 71` + `wwww`. Submit it and we got our flag `picoCTF{gamer_leveluP_334c3e00}`.
 
 ![alt text](image-5.png)
 
@@ -239,5 +239,6 @@ p.sendline(b"wwww")
 
 p.interactive()
 ```
+
 
 
