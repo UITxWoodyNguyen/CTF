@@ -18,7 +18,7 @@ This repository serves as a personal knowledge base for cybersecurity topics, do
 ## 🛠️ Skills & Tools Focus
 
 * **Web:** SSTI, XSS, SQLi, and general web security.
-* **Pwn:** Memory corruption, stack/heap exploitation.
+* **Pwn:** Memory corruption, stack/heap exploitations.
 * **Crypto:** Modern and classical cryptographic analysis.
 * **Languages:** C++, Python, and Shell scripting.
 
