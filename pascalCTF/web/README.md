@@ -8,7 +8,7 @@
 
 ### Đề cho gì?
 
-Đề bài cho một website bán hàng với 4 sản phẩm: FakeZa ($1), ElectricZa ($65), CartoonZa ($35) và RealZa ($1000). Flag được lưu trong sản phẩm RealZa, tuy nhiên khi đăng nhập người dùng chỉ được cấp 100$ balance - không đủ để mua RealZa.
+Đề bài cho một website bán hàng với 4 sản phẩm: `FakeZa ($1), ElectricZa ($65), CartoonZa ($35) và RealZa ($1000)`. Flag được lưu trong sản phẩm RealZa, tuy nhiên khi đăng nhập người dùng chỉ được cấp 100$ balance - không đủ để mua RealZa.
 
 Source code được cung cấp trong file `server.js`:
 
