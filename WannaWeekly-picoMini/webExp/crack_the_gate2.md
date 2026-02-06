@@ -9,7 +9,7 @@ Our task is to bypass the rate-limiting restriction and log in using the known e
 
 Here is the website:
 
-![](https://media.discordapp.net/attachments/961544480366931969/1432649765610323968/image.png?ex=6901d291&is=69008111&hm=4dc25bf96e437d525f20892de5207e02a10f932fdab43e3f89c45356b6738b6c&=&format=webp&quality=lossless&width=586&height=419)
+![](https://cdn.discordapp.com/attachments/961544480366931969/1432649765610323968/image.png?ex=69865151&is=6984ffd1&hm=9280e8f3b8210e3af4c8469578b18fdfa6ece740381df4d2c2925473c2b57dd4&)
 
 And it gives us the list of passwords:
 ```
@@ -43,6 +43,6 @@ yxMq7WAz
 ## Solution
 - After testing some wrong password with the same source, we receive a 20-minute time-out. So for each password, we have to tried with another IP Address. Header `X-Forwarded-For` can be used to provide the source IP. We can use BurpSuite to try to login to the web with a random IP Address and a password.
 - Brute Force until the flag is returned.
-![](https://media.discordapp.net/attachments/961544480366931969/1432658449552117810/image.png?ex=6901daa7&is=69008927&hm=f8485340f49d3200e29181ceb3ffad8df5c7cc22e7b1e4a8a0fe0d7e957d94b8&=&format=webp&quality=lossless&width=1613&height=418)
+![](https://cdn.discordapp.com/attachments/961544480366931969/1432658449552117810/image.png?ex=69865967&is=698507e7&hm=751e86c23f330986ffaa5fd65c8be50685bc44edfc40217f6bdd795d6cef86ba&)
 
 **The flag is `picoCTF{xff_byp4ss_brut3_3477bf15}`**
