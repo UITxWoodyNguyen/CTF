@@ -86,7 +86,7 @@
 - Cụ thể, chương trình sẽ thực hiện tạo một random string gồm 16 kí tự trong khoảng `[A...Z]`, sau đó sử dụng bảng chuyển vị 256 byte `byte_4020` để xáo trộn string vừa tạo 16 lần. Người dùng cần tìm string gốc để lấy flag.
 - Thực hiện kiểm tra bằng IDA, ta thấy bảng chuyển vị được tạo tại địa chỉ `0x4020`:
 
-    ![Raw]()
+    ![Raw](https://github.com/UITxWoodyNguyen/CTF/blob/main/Dreamhack/many-shuffle/Screenshot%202026-02-09%20154908.png)
 - Ta sử dụng `objdump` để dump toàn bộ bảng từ file nhị phân challenge cung cấp:
     ```
     $ objdump -s many-shuffle | grep -A 50 4020
