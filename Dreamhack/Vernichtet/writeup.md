@@ -293,7 +293,7 @@
 4. Dùng backtracking để thử các đường đi khả thi
 
 #### Source code:
-- Ta có code lấy table như sau:
+- Ta có code backtracking như sau:
     ```python
         def solve_all_gaps(gap_idx, solution, filled):
         if gap_idx >= len(gaps):
