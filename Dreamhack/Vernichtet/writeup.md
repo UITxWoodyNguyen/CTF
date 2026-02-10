@@ -294,29 +294,29 @@
 
 #### Source code:
     ```python
-    def solve_all_gaps(gap_idx, solution, filled):
-    if gap_idx >= len(gaps):
-        return True  # Solved!
-    
-    v1, v2, missing = gaps[gap_idx]
-    p1, p2 = exp_to_pos[v1], exp_to_pos[v2]
-    
-    # Tìm tất cả đường đi có độ dài đúng
-    for path in find_paths(p1, p2, len(missing) + 1):
-        # Thử path này
-        for i, p in enumerate(path):
-            solution[p] = missing[i]
-            filled.add(p)
+        def solve_all_gaps(gap_idx, solution, filled):
+        if gap_idx >= len(gaps):
+            return True  # Solved!
         
-        if solve_all_gaps(gap_idx + 1, solution, filled):
-            return True
+        v1, v2, missing = gaps[gap_idx]
+        p1, p2 = exp_to_pos[v1], exp_to_pos[v2]
         
-        # Backtrack
-        for p in path:
-            solution[p] = 0
-            filled.remove(p)
-    
-    return False
+        # Tìm tất cả đường đi có độ dài đúng
+        for path in find_paths(p1, p2, len(missing) + 1):
+            # Thử path này
+            for i, p in enumerate(path):
+                solution[p] = missing[i]
+                filled.add(p)
+            
+            if solve_all_gaps(gap_idx + 1, solution, filled):
+                return True
+            
+            # Backtrack
+            for p in path:
+                solution[p] = 0
+                filled.remove(p)
+        
+        return False
     ```
 
 ### Reversing
