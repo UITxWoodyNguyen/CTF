@@ -55,6 +55,14 @@
     jmp     short near ptr loc_1271+1
     db      0C1h, 0FFh, 0C9h, 48h, 89h
     ```
+- **Nhận xét**:
+    - `jmp short near ptr loc_1271+1` = nhảy đến địa chỉ 0x1271 + 1 = 0x1272
+    - Opcode encoded: `eb ff` (`eb` = `jmp short`, `ff` = `offset -1` vì -1 tính từ sau instruction = +1 từ đầu)
+    - Khi CPU nhảy đến `0x1272`, nó đọc bytes `ff c1 ff c9`:
+        - ff c1 = inc ecx
+        - ff c9 = dec ecx
+    - IDA thấy jmp +1 nên hiểu sai flow, dump raw bytes thay vì decode đúng
+    - Có 3 address trong đoạn mã assembly được decompile từ IDA có pattern này bao gồm `0x1271`, `0x139a` và `0x1604`.
 - Đây là kĩ thuật **jmp into middle of instruction**. Cụ thể trong case này:
     - `eb ff` = `jmp -1` (nhảy vào giữa instruction)
     - `c1 ff c9` = `ror ecx, 0xc9` hoặc được hiểu khác tùy context
