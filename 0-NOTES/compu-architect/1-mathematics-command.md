@@ -166,3 +166,5 @@
 | `sltu` | `sltu $a, $b, $c` | So sánh giá trị trên 2 thanh ghi `$b` và `$c`. `$a = 1` khi `$b < $c`, ngược lại bằng 0 | Thực hiện so sánh trên số **không dấu** |
 | `slti` | `slti $a, $b, val` | So sánh giá trị trên thanh ghi `$b` với giá trị tức thời `val`. `$a = 1` khi `$b < val`, ngược lại bằng 0 | Limitation của giá trị tức thời là 16 bits, mở rộng lên 32 bits khi so sánh. Thực hiện phép so sánh trên số **có dấu dạng bù 2** |
 | `sltiu` | `sltiu $a, $b, val` | So sánh giá trị trên thanh ghi `$b` với giá trị tức thời `val`. `$a = 1` khi `$b < val`, ngược lại bằng 0 | Limitation của giá trị tức thời là 16 bits, mở rộng lên 32 bits khi so sánh. Thực hiện phép so sánh trên số **không dấu** | 
+
+- Mở rộng bit theo **SignExtImm** (tức fill bằng bit dấu)
