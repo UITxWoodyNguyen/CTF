@@ -1,7 +1,7 @@
 # Fridge
 
 > Problem link: https://ctf.0xfun.org/challenges#Chip8%20Emulator-70
-> Category: Reverse Engineering
+> Category: Pwn
 > Points: 100
 > Level: Easy
 
