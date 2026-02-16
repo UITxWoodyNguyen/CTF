@@ -1,7 +1,3 @@
-Here is a comprehensive, A-to-Z writeup for the challenge.
-
----
-
 # CTF Writeup: Nanomites & The Rolling Hash
 
 **Category:** Reverse Engineering  
@@ -257,5 +253,6 @@ When we run the script, it prints:
 2.  **Mechanic:** The Parent intercepts the crash, verifies the hash against a secret table, and resumes execution.
 3.  **Math:** The hash function used a large prime multiplier and XOR mixing.
 4.  **Crack:** We extracted the secret table and mathematically inverted the hash function (using modular inverse) to recover the flag character by character.
+
 
 **Final Flag:** `0xfun{unr3adabl3_c0d3_is_s3cur3_c0d3_XD}`
