@@ -123,6 +123,7 @@ Trying to decompile this binary with IDA, we have found that this binary is a Bi
         F --> G["execv / system\ngcc compile the .c file\nas a normal compiler"]
     ```
     - Base on the `main()`, this binary has 3 main functions, which is `sub_1349` - finding the offset of **magic blob** in file, `sub_14B5` - calculate hash FNV-1a, `sub_1583` - decode and check flag.
+
 Looking at the `sub_1349` function, this function will input a file path, then it will open the file and read each bytes. When it find the byte `0x9A` - the first byte of **magic blob**, it will read the next 7 bytes and check if it match with `byte_4020[1..7]`.
 ```c
 __int64 __fastcall sub_1349(const char *a1)
