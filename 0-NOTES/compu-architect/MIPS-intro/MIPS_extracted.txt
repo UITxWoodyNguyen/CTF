@@ -1,0 +1,784 @@
+--- PAGE 1 ---
+MIPS Instruction Set
+Prof. James L. Frankel
+Harvard University
+Version of 5:52 PM 10-Nov-2020
+Copyright © 2020, 2019, 2018, 2017, 2016, 2015 James L. Frankel.  All rights reserved .
+
+--- PAGE 2 ---
+CPU Overview
+•CPU is an acronym for Central Processor Unit
+•The CPU is the computation unit of the computer
+•The CPU does not include the memory or Input/Output (I/O) devices
+•32-bit Word Size ( i.e.,there are four bytes per word)
+•No Processor Status Word (PSW)
+•A PSW might contain flags (such as carry, overflow, negative), interrupt enable flag, 
+privileged execution mode flag, current interrupt priority, etc.
+•Registers can be accessed at instruction execution speed
+•Access to memory is slower than access to registers
+•User’s data and code reside in memory; Data is moved into registers before 
+operations are performed on them
+2
+
+--- PAGE 3 ---
+Simplified Block Diagram
+CPU Memory
+Registers
+ALUSequencer
+I/O Devices PCHI
+LO
+3
+
+--- PAGE 4 ---
+CPU Registers
+•General Purpose Registers (GPR)
+•Thirty -two 32 -bit GPRs
+•Numbered 0 to 31; Designated $0 through $31
+•Some are used by the hardware
+•All have designated usage by software
+•Multiply/Divide Registers
+•Used by hardware multiply and divide instructions
+•32-bit HI register
+•32-bit LO register
+•Program Counter (PC)
+•32-bit PC contains the address of the next instruction to be executed
+•During instruction fetch, the PC is incremented to point to the next instruction
+4
+
+--- PAGE 5 ---
+General Purpose Registers
+•$0 is always read as value 0; Values written to it are ignored
+•$1 (named $at) is reserved for use by the assembler
+•$2 and $3 (named $v0 & $v1, respectively) are used in expression evaluation and also for the return value 
+from a function
+•$4 through $7 (named $a0 through $a3) are used to pass actual parameters 1 through 4 to functions
+•$8 through $15 and $24 and $25 (named $t0 through $t7 and $t8 and $t9) are used for temporaries that are 
+not saved by a called function
+•$16 through $23 (named $s0 through $s7) are used for temporaries that must be saved by a called function
+•$26 and $27 (named $k0 and $k1) are reserved for operating system use
+•$28 (named $ gp) is used to point to global variables
+•$29 (named $ sp) is the stack pointer
+•$30 (named $ fp) is the frame pointer
+•$31 (named $ ra) contains the return address
+5
+
+--- PAGE 6 ---
+Hardware Use of General Purpose Registers
+•In the CPU, all registers are general purpose and can be used 
+interchangeably except :
+•$0 is always read as value 0; Values written to it are ignored
+•$31 (named $ ra) contains the return address
+•The instructions that call a subroutine place the address of the instruction following the 
+subroutine call instruction ( i.e.,the return address) in register $ ra
+•The term subroutine is often used to refer to a procedure or function at the assembly 
+language level
+6
+
+--- PAGE 7 ---
+Memory Addresses
+•Memory in MIPS is byte -addressable
+•That is, each byte in memory is sequentially numbered
+•MIPS requires alignment for memory accesses
+•A 32 -bit word must be located and accessed using a word aligned address
+•The address of a word is the address of the lowest numbered byte in that word
+•This implies that the low -order two bits of a word address must both be zeros
+•A 16 -bit half -word must be located and accessed using a half -word aligned 
+address
+•The address of a half-word is the address of the lower numbered byte in that half-word
+•This implies that the low -order bit of a half -word address must be zero
+•There is no alignment required for 8 -bit byte accesses
+7
+
+--- PAGE 8 ---
+Return Address
+•Because instructions that call a subroutine overwrite register $ rawith 
+their return address, any subroutine that calls another subroutine 
+must save register $ raprior to a nested call
+•In order to allow nested and recursive subroutines, any function that calls 
+another subroutine generally saves register $ raon the stack (using the 
+equivalent of push and pop actions)
+•We will delve into the calling conventions for functions and procedures later
+8
+
+--- PAGE 9 ---
+Temporary and Saved GPRs
+•The software convention differentiates between temporary ( i.e.,$tn) and 
+saved ( i.e.,$sn) registers
+•Following these conventions, a subroutine is required to save (on the stack) 
+any $s registers that it uses
+•A subroutine is notrequired to save any $t registers that it uses
+•Of course, a subroutine is allowed to use both $t and $s GPR registers
+•In a section of code in which a subroutine is not called, both $t and $s registers will 
+retain their values
+•If a subroutine iscalled, the $t registers are not guaranteed to retain their values 
+across the call
+•Therefore, if a caller wants to maintain the values in $t registers across a call, the caller will 
+push the selected $t registers’ values before the call and pop those registers’ values after the 
+call
+9
+
+--- PAGE 10 ---
+Onus of Responsibility for Temporary and 
+Saved GPRs
+•A caller is a code section that calls a subroutine
+•A callee is a subroutine that is called
+•Onus of responsibility for $t and $s registers
+•The caller is responsible for saving and restoring any $t registers whose values 
+it needs to be retained across subroutine calls
+•The callee is responsible for saving and restoring any $s registers that it 
+modifies
+10
+
+--- PAGE 11 ---
+Stack
+•The $ spregister is used to maintain a stack
+•$sppoints to the word on top -of-stack
+•The stack grows toward lower addresses
+•Therefore, a push operation is implemented by
+•First, decrementing the $ spby four
+•Then, storing the word to be pushed on the stack into memory at the location 
+pointed to by $ sp
+•And similarly, a pop operation is implemented by
+•First, reading the word on the top of stack by reading the word at the location 
+pointed to by $ sp
+•Then, incrementing the $ spby four
+11
+
+--- PAGE 12 ---
+CPU Instruction Formats
+•I-Type (Immediate)
+•J-Type (Jump)
+•R-Type (Register)
+12
+
+--- PAGE 13 ---
+I-Type
+31 06
+op5
+rs5
+rt16
+immediate
+13
+
+--- PAGE 14 ---
+J-Type
+31 06
+op target26
+14
+
+--- PAGE 15 ---
+R-Type
+31 05
+rt5
+rs6
+op5
+rd5
+re6
+funct
+15
+
+--- PAGE 16 ---
+Instruction Summary
+•Load & Store instructions move data between memory and registers
+•All are I -type
+•Computational instructions (arithmetic, logical, shift) operate on 
+registers
+•Both R -type and I -type exist
+•Jump & Branch instructions affect control flow ( i.e.,may change the 
+value in the PC register)
+•Jumps are J -type or R -type
+•Branches are I -type
+16
+
+--- PAGE 17 ---
+Immutable Instructions
+•In all modern computers, once instructions are loaded into memory 
+for execution, they are immutable
+•That is, they cannot be modified
+•This doesn’t have to be true in your new instruction set
+•This implies that in all modern computers, data is not intermingled 
+with instructions in memory
+•Data and instructions may be intermingled in an assembly program so long as 
+the assembler is able to separate all the instructions and all the data words 
+into separate segments (e.g., the text segment and the data segment )
+17
+
+--- PAGE 18 ---
+Assembly Language Format
+•Instructions begin with an opcode
+•The opcode is usually indented (usually by a single tab character)
+•The opcode is followed by white space (usually a single tab character)
+•The tab is followed by the operands that are appropriate for that opcode
+•Most instructions take the destination specifier as the first operand
+•For example , in
+addu rd, rs, rt
+rdis the destination
+rs& rtare sources
+18
+
+--- PAGE 19 ---
+Role of an Assembler
+•An assembler accepts a file containing a program written in a low -level, but 
+textual assembly language and produces a file containing that same 
+program in a machine code (i.e.,numeric) representation
+•Other roles of the assembler
+•It allows the programmer to use labels on instructions and data and to reference 
+those labels in the program
+•This means that –in most cases –the programmer does not need to use numeric addresses
+•It allows labels to be assigned numeric constant values and referenced
+•It converts character and string constants into their character code values
+•It accepts comments
+•It may extend the instruction set with pseudo -instructions
+•It may accept various assembler directives
+19
+
+--- PAGE 20 ---
+Instruction Set Architecture (ISA) Descriptive 
+Information
+•The description of each instruction will
+•Give its opcode name
+•Define the overall instruction format
+•Define the assembly language syntax
+•In English, concisely describe what the instruction does
+•In a mathematical notation, describe what the instruction does
+•Show precisely how the instruction is encoded in its machine representation
+20
+
+--- PAGE 21 ---
+Add Instruction
+•ADD Instruction, R -Type
+•Format: ADD rd, rs, rt
+•Description: The contents of general register rsand the contents of 
+general register rtare added to form a 32 -bit result.  The result is 
+placed in general register rd.
+An overflow exception occurs if the two highest order carry -out bits 
+differ (2’s -complement overflow).  The destination register rdis not 
+modified when an integer overflow exception occurs.
+•Operation: GPR[ rd] ←GPR[ rs] + GPR[ rt]
+21
+
+--- PAGE 22 ---
+ADD Instruction Fields
+31 05
+rt5
+rs6
+SPECIAL
+0000005
+rd5
+0
+000006
+ADD
+100000
+22
+
+--- PAGE 23 ---
+Add Unsigned Instruction
+•ADDU Instruction, R -Type
+•Format: ADDU rd, rs, rt
+•Description: The contents of general register rsand the contents of 
+general register rtare added to form a 32 -bit result.  The result is 
+placed in general register rd.
+No overflow exception occurs under any circumstances.
+The only difference between this instruction and the ADD instruction 
+is that ADDU never causes an overflow exception.
+•Operation: GPR[ rd] ←GPR[ rs] + GPR[ rt]
+23
+
+--- PAGE 24 ---
+ADDU Instruction Fields
+31 05
+rt5
+rs6
+SPECIAL
+0000005
+rd5
+0
+000006
+ADDU
+100001
+24
+
+--- PAGE 25 ---
+Three -Operand R -Type Instructions
+•ADD: Add
+•ADDU: Add Unsigned
+•SUB: Subtract (GPR[rs] -GPR[rt])
+•SUBU: Subtract Unsigned (GPR[rs] -GPR[rt])
+•SLT: Set on Less Than (if GPR[rs] < GPR[rt])
+•Compare as signed 32 -bit integers
+•Result is 1 if true, 0 if false
+•SLTU: Set on Less Than Unsigned (if GPR[rs] < GPR[rt])
+•Compare as unsigned 32 -bit integers
+•Result is 1 if true, 0 if false
+•AND: Bitwise Logical AND
+•OR: Bitwise Logical OR
+•XOR: Bitwise Logical Exclusive -OR
+•NOR: Bitwise Logical NOR
+25
+
+--- PAGE 26 ---
+Multiply Instruction
+•MULT Instruction, Two -Operand R -Type
+•Format: MULT rs, rt
+•Description: The contents of general registers rsand rtare multiplied as 32 -bit 2’s complement 
+(i.e.,signed) values.  No integer overflow exception occurs under any circumstances.  This 
+instruction is only valid when rd= 0.
+When the operation completes, the low order word of the double result is loaded into special 
+register LO, and the high order word of the double result is loaded into special register HI.
+If either of the two preceding instructions is MFHI or MFLO, the results of these instructions are 
+undefined.  Correct operation requires separating reads of HIor LOfrom writes by a minimum of 
+two other instructions.
+•Operation: T-2: LO is undefined
+HI is undefined
+T-1: LO is undefined
+HI is undefined
+T: t ←GPR[ rs] * GPR[ rt]
+LO ← t31..0HI← t63..32
+26
+
+--- PAGE 27 ---
+MULT Instruction Fields
+31 05
+rt5
+rs6
+SPECIAL
+0000005
+0
+000005
+0
+000006
+MULT
+011000
+27
+
+--- PAGE 28 ---
+Move From HI Instruction
+•MFHI Instruction, One -Operand R -Type
+•Format: MFHI rd
+•Description: The contents of special register HIare placed in general 
+register rd.
+To ensure proper operation in the event of interrupts, the two 
+instructions which follow an MFHI instruction may not be any of the 
+instructions which modify the HIregister: MULT, MULTU, DIV, DIVU, or 
+MTHI.
+•Operation: GPR[ rd] ←HI
+28
+
+--- PAGE 29 ---
+MFHI Instruction Fields
+31 05
+0
+000005
+0
+000006
+SPECIAL
+0000005
+rd5
+0
+000006
+MFHI
+010000
+29
+
+--- PAGE 30 ---
+Multiply/Divide R -Type Instructions
+•MULT: Multiply
+•MULTU: Multiply Unsigned
+•Similar to MULT, but…
+•GPR[ rs] & GPR[ rt] are both treated as 32 -bit unsigned values
+•DIV: Divide
+•Divides GPR[ rs] by GPR[ rt], LO ← quotient, HI ← remainder
+•GPR[ rs] & GPR[ rt] are both treated as 32 -bit 2’s complement values
+•DIVU: Divide Unsigned
+•Similar to DIV, but…
+•GPR[ rs] & GPR[ rt] are both treated as 32 -bit unsigned values
+•MFHI: Move From HI
+•MFLO: Move From LO
+•MTHI: Move To HI
+•MTLO: Move To LO
+30
+
+--- PAGE 31 ---
+Shift Right Logical Instruction
+•SRLInstruction, Shift R -Type
+•Format: SRL rd, rt, sa
+•Description: The contents of general register rtare shifted right by sa
+bits, inserting zeros into the high order bits.  The result is placed in 
+general register rd.
+•Operation: GPR[ rd] ←0sa|| GPR[ rt]31..sa
+31
+
+--- PAGE 32 ---
+SRL Instruction Fields
+31 05
+rt5
+0
+000006
+SPECIAL
+0000005
+rd5
+sa6
+SRL
+000010
+32
+
+--- PAGE 33 ---
+Shift Right Arithmetic Instruction
+•SRA Instruction, Shift R -Type
+•Format: SRA rd, rt, sa
+•Description: The contents of general register rtare shifted right by sa
+bits, sign -extending the high order bit.  The 32 -bit result is placed in 
+general register rd.
+•Operation: GPR[ rd] ←(GPR[ rt]31)sa|| GPR[ rt]31..sa
+33
+
+--- PAGE 34 ---
+SRA Instruction Fields
+31 05
+rt5
+0
+000006
+SPECIAL
+0000005
+rd5
+sa6
+SRA
+000011
+34
+
+--- PAGE 35 ---
+Shift Right Logical Variable Instruction
+•SRLV Instruction, Shift R -Type
+•Format: SRLV rd, rt, rs
+•Description: The contents of general register rtare shifted right by 
+the number of bits specified by the low order five bits of general 
+register rs, inserting zeros into the high order bits.  The 32 -bit result is 
+placed in general register rd.
+•Operation: s ←GPR[ rs]4..0
+GPR[ rd] ←0s|| GPR[ rt]31..s
+35
+
+--- PAGE 36 ---
+SRLV Instruction Fields
+31 05
+rt5
+rs6
+SPECIAL
+0000005
+rd5
+0
+000006
+SRLV
+000110
+36
+
+--- PAGE 37 ---
+Shift R -Type Instructions
+•SLL: Shift Left Logical
+•SRL: Shift Right Logical
+•SRA: Shift Right Arithmetic
+•SLLV: Shift Left Logical Variable
+•SRLV: Shift Right Logical Variable
+•SRAV: Shift Right Arithmetic Variable
+37
+
+--- PAGE 38 ---
+Add Immediate Instruction
+•ADDI Instruction, I -Type
+•Format: ADDI rt, rs, immediate
+•Description: The 16 -bit immediate is sign -extended and added to the 
+contents of general register rsto form a 32 -bit result.  The result is 
+placed in general register rt.
+An overflow exception occurs if the two highest order carry -out bits 
+differ (2’s -complement overflow).  The destination register rtis not 
+modified when an integer overflow exception occurs.
+•Operation: GPR[ rt] ←GPR[ rs] + (immediate15)16||immediate15..0
+38
+
+--- PAGE 39 ---
+ADDI Instruction Fields
+31 06
+ADDI
+0010005
+rs5
+rt16
+immediate
+39
+
+--- PAGE 40 ---
+ALU I -Type Instructions
+•ADDI: Add Immediate
+•ADDIU: Add Immediate Unsigned
+•The 16 -bit immediate is sign -extended
+•No overflow exception occurs under any circumstances
+•SLTI: Set on Less Than Immediate (if GPR[rs] < immediate)
+•The 16 -bit immediate is sign-extended
+•Compare as signed integers
+•SLTIU : Set on Less Than Immediate Unsigned (if GPR[rs] < immediate)
+•The 16 -bit immediate is sign-extended
+•Compare as unsigned integers
+•ANDI : Bitwise Logical AND Immediate
+•The 16 -bit immediate is zero -extended
+•ORI: Bitwise Logical OR Immediate
+•The 16 -bit immediate is zero -extended
+•XORI: Bitwise Logical Exclusive -OR Immediate
+•The 16 -bit immediate is zero -extended
+•LUI: Load Upper Immediate
+•LUI rt, immediate
+•Field rsshould be zero (SBZ)
+•The 16 -bit immediate is shifted left 16 bits; the low order 16 bits are set to zeros; result is stored in general register rt
+40
+
+--- PAGE 41 ---
+Branch on Equal Instruction
+•BEQ Instruction, I -Type
+•Format: BEQ rs, rt, offset
+•Description: A branch target address is computed from the sum of the 
+address of the instruction in the delay slot and the 16 -bit offset , shifted left 
+two bits and sign -extended to 32 bits.  The contents of general register rs
+and the contents of general register rtare compared.  If the two registers 
+are equal, then the program branches to the target address, with a delay of 
+one instruction.
+Operation: T: targetOffset ← (offset15)14|| offset || 02
+condition ← (GPR[ rs] = GPR[ rt])
+T+1: if condition then
+PC ←PC + targetOffset
+endif
+41
+
+--- PAGE 42 ---
+BEQ Instruction Fields
+31 06
+BEQ
+0001005
+rs5
+rt16
+offset
+42
+
+--- PAGE 43 ---
+Branch I -Type Instructions
+•BEQ: Branch on Equal
+•BNE: Branch on Not Equal
+•For all of the following instructions:
+•Only one register is specified
+•The assembly language has the form: OPCODE rs, offset
+•Field rtshould be zero (SBZ)
+•Treat GPR[ rs] as a signed integer
+•BLEZ: Branch on Less Than or Equal to Zero
+•BGTZ: Branch on Greater Than Zero
+•BLTZ : Branch on Less Than Zero
+•BGEZ : Branch on Greater Than or Equal to Zero
+•BLTZAL: Branch on Less Than Zero and Link
+•BGEZAL: Branch on Greater Than or Equal to Zero and Link
+43
+
+--- PAGE 44 ---
+The And Link Instructions
+•The And Link instructions place the address of the instruction 
+following the delay slot into the link (return address) register ( $raor 
+$31) unconditionally ( i.e., whether or not the instruction branches, 
+register $rais modified with the potential return address)
+•Register rsmay not be general register 31
+•Thus, the And Link instructions are used to call subroutines
+44
+
+--- PAGE 45 ---
+The offset in Branch Instructions
+•Instructions are required to be on word -aligned addresses
+•Therefore, the low -order two bits of the address of an instruction are always zeros
+•The target address of a branch (or jump) instruction must be word aligned
+•There is no benefit to being able to produce a non -word aligned target address
+•Therefore, the offset field is left shifted two bits to force word -alignment and 
+allow a branch range which is four times larger than the non -shifted offset
+•The offset field is 16 bits wide (and, therefore, can express a value from -32768 to 
+32767)
+•Before being possibly added to the PC, the offset is left shifted two bits (and, 
+therefore, can express a value from -32768*4 to 32767*4)
+•This allows a maximum branch range of from 32,768 instructions before the instruction in the 
+delay slot to 32,767 instructions after the instruction in the delay slot
+45
+
+--- PAGE 46 ---
+Jump Instruction
+•JInstruction, J-Type
+•Format: J target
+•Description: The 26 -bit target address is shifted left two bits and 
+combined with the high order four bits of the address of the 
+instruction in the delay slot.  The program unconditionally jumps to 
+this calculated address with a delay of one instruction.
+Operation: T: temp ← target
+T+1: PC ←PC31..28 || temp || 02
+46
+
+--- PAGE 47 ---
+J Instruction Fields
+31 06
+J
+000010target26
+47
+
+--- PAGE 48 ---
+Jump And Link Instruction
+•JALInstruction, J-Type
+•Format: JAL target
+•Description: The 26 -bit target address is shifted left two bits and 
+combined with the high order four bits of the address of the 
+instruction in the delay slot.  The program unconditionally jumps to 
+this calculated address with a delay of one instruction.  The address 
+of the instruction after the delay slot is placed in the link register, r31.
+Operation: T: temp ← target
+GPR[31] ← PC + 8
+T+1: PC ←PC31..28 || temp || 02
+48
+
+--- PAGE 49 ---
+JAL Instruction Fields
+31 06
+JAL
+000011target26
+49
+
+--- PAGE 50 ---
+Jump Register Instruction
+•JRInstruction, R -Type
+•Format: JR rs
+•Description: The program unconditionally jumps to the address 
+contained in general register rs, with a delay of one instruction.  This 
+instruction is only valid when rd= 0.
+The low -order two bits of the target address in register rsmust be 
+zeros because instructions must be word -aligned.
+Operation: T: temp ← GPR[ rs]
+T+1: PC ←temp
+50
+
+--- PAGE 51 ---
+JR Instruction Fields
+31 05
+0
+000005
+rs6
+SPECIAL
+0000005
+0
+000005
+0
+000006
+JR
+001000
+51
+
+--- PAGE 52 ---
+Jump And Link Register Instruction
+•JALR Instruction, R -Type
+•Format: JALR rs, rd
+•Description: The program unconditionally jumps to the address 
+contained in general register rs, with a delay of one instruction.  The 
+address of the instruction after the delay slot is placed in general 
+register rd.  Register specifiers rsand rdmay not be equal.
+The low -order two bits of the target address in register rsmust be 
+zeros because instructions must be word -aligned.
+Operation: T: temp ← GPR[ rs]
+GPR[ rd]← PC + 8
+T+1: PC ←temp
+52
+
+--- PAGE 53 ---
+JALR Instruction Fields
+31 05
+0
+000005
+rs6
+SPECIAL
+0000005
+rd5
+0
+000006
+JALR
+001001
+53
+
+--- PAGE 54 ---
+Jump Instructions
+•J: Jump
+•JAL: Jump And Link
+•JR: Jump Register
+•JALR : Jump And Link Register
+54
+
+--- PAGE 55 ---
+Load Word Instruction
+•LWInstruction, I -Type
+•Format: LW rt, offset(base)
+•Description: The 16 -bit offset is sign -extended and added to the 
+contents of general register base to form a virtual address.  The 
+contents of the word at the memory location specified by the 
+effective address are loaded into general register rt.
+The two least significant bits of the effective address must be zeros.
+Operation: T: vAddr ← ((offset15)16|| offset15..0) +GPR[base]
+mem ← LoadMemory (WORD, vAddr )
+GPR[ rt] is undefined
+T+1: GPR[ rt]← mem
+55
+
+--- PAGE 56 ---
+LW Instruction Fields
+31 06
+LW
+1000115
+base5
+rt16
+offset
+56
+
+--- PAGE 57 ---
+Load and Store Instructions
+•LB: Load Byte
+•LBU: Load Byte Unsigned
+•LH: Load Halfword
+•LHU: Load Halfword Unsigned
+•LW: Load Word
+•For the following Store instructions:
+•The assembly language has the same form as for the Load instructions: OPCODE rt, offset(base)
+•But, unlike other instructions, the leftmost operand, rt, is the source –not the destination; that is, 
+GPR[ rt] is stored in memory at the address given by GPR[base]+(sign -extension(offset))
+•SB: Store Byte
+•SH: Store Halfword
+•SW: Store Word
+57
+
+--- PAGE 58 ---
+Load and Store Instructions offset Field
+•For all of the Load and Store instructions, the offset field is not shifted 
+left before being added to the contents of the general register base
+•This limits the range of halfwords and words that can be accessed via 
+Load and Store instructions, but makes all these instructions uniform
+•A different design might allow twice the range when halfwords are accessed 
+and four times the range when words are accessed
+58
+
+--- PAGE 59 ---
+Push Implementation
+•There are no dedicated stack manipulation instructions
+•Pushing register $ regonto the stack is implemented by
+•addiu $sp, $sp, -4 # decrement the $ spfor one word
+•sw$reg, 0($ sp) # store $ regon the stack
+•Similarly, pushing three registers onto the stack is implemented by
+•addiu $sp, $sp, -12 # decrement the $ spfor three words
+•sw$firstReg , 8($ sp) # store $firstReg on the stack
+•sw$secondReg , 4($sp)# store $secondReg on the stack
+•sw$thirdReg , 0($sp) # store $thirdReg on the stack
+59
+
+--- PAGE 60 ---
+Pop Implementation
+•There are no dedicated stack manipulation instructions
+•Popping register $ regoff of the stack is implemented by
+•lw$reg, 0($ sp) # load $ regfrom the stack
+•addiu $sp, $sp, 4 # increment the $ spfor one word
+•Similarly, popping three registers off of the stack is implemented by
+•lw$thirdReg , 0($ sp) # load $ thirdReg from the stack
+•lw$secondReg , 4($ sp) # load $ secondReg from the stack
+•lw$firstReg , 8($ sp) # load $ firstReg from the stack
+•addiu $sp, $sp, 12 # increment the $ spfor three words
+60
