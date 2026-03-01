@@ -1,0 +1,1 @@
+printf "UVT{\nKr4\nst4rG4te\npR0b3Z3n\nuR_pR0b3Z_xTND-\nI_h1D3_in_l0Gz_\n1n_v01D_\niN_ZEN}\n" | wine startfield/Startfield/crackme.exe
