@@ -23,12 +23,12 @@ $ checksec --file=vuln
 ```
 
 This result means:
-- This is a 64-bit ELF, PIE enabled, and symbols still present (not stripped).
-- **NX** blocks code injection shellcode on stack.
-- **PIE** randomizes code base, but irrelevant here because no complex ROP needed.
-- **No canary** but no practical overflow primitive anyway due bounded `fgets`.
-- **Full RELRO** blocks easy GOT overwrite.
-- **SHSTK/IBT (CET)** present, making control-flow hijack harder in modern contexts.
+- The binary is a 64-bit ELF with PIE enabled and symbols present (not stripped).
+- **NX** prevents executing injected shellcode on the stack.
+- **PIE** randomizes the code base; this is not an obstacle here since we do not need complex ROP.
+- There is **no stack canary**, but there is no practical overflow primitive because `fgets` is bounded.
+- **Full RELRO** prevents easy GOT overwrites.
+- **SHSTK/IBT (CET)** are enabled, which increases the difficulty of control-flow hijacking.
 
 Next, decompile the binary with IDA, we can see the pseudocode of binary's main:
 ```c
@@ -55,7 +55,7 @@ int __fastcall main(int argc, const char **argv, const char **envp) {
 }
 ```
 
-Base on the pseudocode, we observed that this binary has some important functions that need to analyze (`main`, `setup`, and `print_flag`). So, we will try to check the disassembly source code to understand the binary's flow:
+Based on the pseudocode, the important functions to analyze are `main`, `setup`, and `print_flag`. We'll inspect the disassembly to understand the program flow:
 - `main()`:
     ```asm
     ; int __fastcall main(int argc, const char **argv, const char **envp)
@@ -132,7 +132,7 @@ Base on the pseudocode, we observed that this binary has some important function
     main            endp
     ```
 
-    - Base on the assembly code, at runtime, the process of this binary contains 10 steps:
+    - Based on the assembly, the program performs these steps at runtime:
         - Configure stdio buffering in `setup()`.
         - Initialize stack local variable to `0xDEADBEEF`.
         - Prompt for name.
@@ -144,15 +144,15 @@ Base on the pseudocode, we observed that this binary has some important function
         - Compare `user_code` with local secret (`0xDEADBEEF`).
         - If equal, call `print_flag()`, else print failure message.
     
-    - The key logic can be figured out base on the assembly source code:
-        - `mov DWORD PTR [rbp-0x4],0xdeadbeef` → stores expected secret on stack.
-        - Name buffer at `[rbp-0x50]`, read by `fgets(..., 0x40, stdin)`.
-        - Newline stripped by `strcspn` and null terminator writeback.
-        - `printf(name)` introduces **format-string vulnerability**.
-        - Input secret at `[rbp-0x54]` via `%u`.
-        - Branch:
-            - equal → `call print_flag`
-            - not equal → `puts("Wrong! Nice try.")`
+    - Key details from the assembly:
+        - `mov DWORD PTR [rbp-0x4],0xdeadbeef` stores the expected secret on the stack.
+        - The name buffer is at `[rbp-0x50]` and is read with `fgets(..., 0x40, stdin)`.
+        - The newline is removed using `strcspn` and a null terminator is written.
+        - `printf(name)` introduces an **uncontrolled format-string vulnerability**.
+        - The user-supplied secret is read at `[rbp-0x54]` via `scanf("%u", ...)`.
+        - Control flow:
+            - if equal → `call print_flag`
+            - else → `puts("Wrong! Nice try.")`
 
 - `setup()`: This function will calls `setvbuf(stdout, NULL, _IONBF, 0)` and same for `stdin` in order to deterministic I/O behavior for interactive challenge.
 ```asm
@@ -275,9 +275,9 @@ utflag{f0rm4t_str1ng_l34k3d}
 ```
 
 ### Attempt 3: Format-string based leak
-Base on the analyst, this binary has format-string vuln at `print(name)`. So here is the exploitation path:
-- `printf(name)` allows stack reads.
-- Brute-forced positional `%n$p` and found `offset=17` leaks a word containing `deadbeef` in lower 32 bits.
+Based on the analysis, this binary has a format-string vulnerability at `printf(name)`. The exploitation path is:
+- `printf(name)` allows reading stack values.
+- We brute-forced positional `%i$p` (using `%%%d\$p`) and discovered that `offset=17` leaks a word containing `deadbeef` in the low 32 bits.
     ```bash
     for i in $(seq 1 80); do
     out=$( (printf "%%%d\$p\n0\n" "$i"; ) | ./vuln 2>/dev/null )

