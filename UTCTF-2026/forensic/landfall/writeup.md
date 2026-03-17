@@ -8,7 +8,10 @@
 ## Artifacts/Infrastructures
 
 ### Artifacts
-* [Triage file](https://github.com/RobinVA-UIT/robinva-uit.github.io/releases/download/UTCTF2026HalfAwake/UTCTF2026_Artifact_HalfAwake.zip)
+* [Triage file](https://github.com/RobinVA-UIT/robinva-uit.github.io/releases/download/UTCTF2026Landfall/Modified_KAPE_Triage_Files.zip)
+* [briefing.txt](https://github.com/RobinVA-UIT/robinva-uit.github.io/releases/download/UTCTF2026Landfall/briefing.txt)
+* [how-to-solve.txt](https://github.com/RobinVA-UIT/robinva-uit.github.io/releases/download/UTCTF2026Landfall/how-to-solve.txt)
+* [checkpointA.zip](https://github.com/RobinVA-UIT/robinva-uit.github.io/releases/download/UTCTF2026Landfall/checkpointA.zip)
 
 ---
 
