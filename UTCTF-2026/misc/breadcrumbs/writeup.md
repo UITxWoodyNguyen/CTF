@@ -14,13 +14,13 @@ We can see a Base64 string in this file:
 aHR0cHM6Ly9naXN0LmdpdGh1Yi5jb20vZ2FydmswNy9iYTQwNjQ2MGYyZTkzMmI1NDk2Y2EyNTk3N2JlMjViZQ==
 ```
 
-Next, check all gists, we have found 3 other files - `poem.txt`, `analysis.txt`, `final.txt`:
+Next, checking all gists, we found three other files: `poem.txt`, `analysis.txt`, and `final.txt`:
 
 ![all_gist](https://www.notion.so/image/attachment%3Aac6d4b29-ee04-493f-8b26-e284f334d2c6%3Aimage.png?table=block&id=3261b638-5371-80f9-ba2f-d3a918b99249&spaceId=a781b638-5371-818f-8f7e-000357107d6a&width=1420&userId=&cache=v2)
 
 
-Trying to check the remaining file:
-- `poem.txt`: This file has a poem and an url link to `analysis.py`:
+Checking the remaining files:
+- `poem.txt`: This file has a poem and a URL link to `analysis.py`:
     ```
     Gather your wits, the path winds on from here,
     In shadows deep, the truth is never clear,
@@ -30,7 +30,7 @@ Trying to check the remaining file:
     p.s. https://gist.github.com/garvk07/963e70be662ea81e96e4e63553038d1a
     ```
 
-    Taking a look at this poem, we can find a hint **Three letters follow, open up the book.**
+    Taking a look at the poem, we find the hint **"Three letters follow, open up the book."**
 
 - `analysis.py`: 
     ```python
@@ -46,18 +46,18 @@ Trying to check the remaining file:
     print(results)
     ```
 
-    This python source code contains a hex string in comment:
+    This Python source code contains a hex string in a comment:
         ```
         68747470733a2f2f676973742e6769746875622e636f6d2f676172766b30372f3564356566383539663533306333643539336134613363373538306432663239
         ```
 
-- `final.txt`: This file contains a string that look like the flag format
+- `final.txt`: This file contains a string that looks like the flag format
     ```
     You've reached the end of the trail. Your reward:
     hgsynt{s0yy0j1at_gu3_pe4jy_ge41y}
     ```
 
-Trying to decode all information we have gathered in all file, except the `final.txt`, we can find that the information we have from the previous file is the hint for the next file. So, all thing we need is decode the flag pattern, which is rarely encoded by ROT-13
+Decoding the gathered information (except `final.txt`) shows each file points to the next. The final token is ROT13-encoded, so we decode it.
 
 Source code:
 ```python

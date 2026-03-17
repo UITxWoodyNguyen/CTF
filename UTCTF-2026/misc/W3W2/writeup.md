@@ -6,27 +6,27 @@ The three words I would use to describe this location are...
 Flag format: utflag{word1.word2.word3}
 
 ## Osint Path
-Base on the challenge description, we predicted that our task is figure out correctly where is the picture is taken, then find that location on https://what3words.com/
+Based on the challenge description, we predicted our task is to correctly figure out where the picture was taken, then find that location on https://what3words.com/
 
 First, take a look at the picture:
 
 ![Pic 1](https://www.notion.so/image/attachment%3Af09716e1-5df6-4a14-a28c-a19238a41367%3AW3W2.jpg?table=block&id=3261b638-5371-8072-b6b7-ff612417b5ce&spaceId=a781b638-5371-818f-8f7e-000357107d6a&width=1410&userId=&cache=v2)
 
-- From the picture, this is a **Merchandise & Gift Shop** and the cameraman has stood in front of the shop to take this picture.
-- In the back of the shop, there are lots of trees and some electric column.
+-- From the picture, this is a **Merchandise & Gift Shop** and the photographer stood in front of the shop to take the photo.
+-- Behind the shop, there are many trees and some electric poles.
 
-Try search "Merchandise and Gift shop" on Google Map, we have found this place:
+Searching "Merchandise and Gift Shop" on Google Maps, we found this place:
 
 ![map](https://www.notion.so/image/attachment%3A254ebf8f-7155-4eb3-91b0-000975635f79%3Aimage.png?table=block&id=3261b638-5371-809f-afae-e28baff78874&spaceId=a781b638-5371-818f-8f7e-000357107d6a&width=770&userId=&cache=v2)
 
-Click to the location we have found and luckily, it is the shop in the picture:
+Clicking the location we found, it matches the shop in the picture:
 
 ![found](https://www.notion.so/image/attachment%3A1f348dd3-e02a-4256-8604-1738b835dc42%3Aimage.png?table=block&id=3261b638-5371-80c1-a6a8-f040a0651d91&spaceId=a781b638-5371-818f-8f7e-000357107d6a&width=750&userId=&cache=v2)
 
-Open https://what3words.com/ and find the location of the shop we have found, base on the picture we can predicted that this is the zone we need to find:
+Opening https://what3words.com/ and locating the shop, based on the picture we predicted this is the zone to search:
 
 ![zone](https://www.notion.so/image/attachment%3A5e229860-8614-4416-838d-1423f1356d40%3Aimage.png?table=block&id=3261b638-5371-8000-9319-f371a70473c3&spaceId=a781b638-5371-818f-8f7e-000357107d6a&width=1220&userId=&cache=v2)
 
-Brute force all location in the red zone and we have found the flag at this point:
+Brute-forcing all locations in the red zone, we found the flag at this point:
 
 ![flag](https://www.notion.so/image/attachment%3A58f30afb-2dfb-4927-b9e7-9f86723dc414%3Aimage.png?table=block&id=3261b638-5371-8001-b3ee-f2ddeba5d3b5&spaceId=a781b638-5371-818f-8f7e-000357107d6a&width=1410&userId=&cache=v2)

@@ -7,7 +7,7 @@ python3 jail.py
 ```
 
 ## Analyzing Path
-The challenge gives us a python source code, first try to open it:
+The challenge gives us a Python source file; first, try to open it:
 ```python
 import sys
 
@@ -98,15 +98,15 @@ while True:
         print(f"  [ERROR] {e}")
 ```
 
-Base on the python script, we have figured out some suspicious point:
+Based on the Python script, we identified some suspicious points:
 
-- First, there is a secret function in this source code:
+-- First, there is a secret function in this source code:
     ```python
     def _secret():
         return ''.join(chr(b ^ _KEY) for b in _ENC)
     ```
 
-- Next, there is a blacklist containing some banned string:
+-- Next, there is a blacklist containing some banned strings:
     ```python
     BANNED = [
         "import", "os", "sys", "system", "eval",
@@ -115,28 +115,28 @@ Base on the python script, we have figured out some suspicious point:
     ]
     ```
 
-- Finally, `GLOBALS` is padded into `exec` but it sill contains `_secret`:
+-- Finally, `GLOBALS` is passed into `exec`, but it still contains `_secret`:
     ```python
     GLOBALS = {"__builtins__": SAFE_BUILTINS, "_secret": _secret}
     ```
 
-- So we can observed that this program only blocks static string, all runtime dynamic string are still active.
+-- So we can observe that this program only blocks static strings; runtime-generated strings remain usable.
 
-Overall, this source code has some important point:
+Overall, this source code contains some important points:
 - `_ENC` is the encoded bytes array.
-- `_KEY = 0x42` is XOR key.
-- `_secret()` decode `_ENC ^ _KEY`.
-- Blacklist has keyword `secret`, but it has not banned `vars`, `chr`, `map`, `getattr`.
+- `_KEY = 0x42` is the XOR key.
+- `_secret()` decodes `_ENC` with `_KEY`.
+- The blacklist contains `secret`, but does not ban `vars`, `chr`, `map`, or `getattr`.
 
-So there is no embeeded binary data, so `binwalk/exiftool` is not needed.
+There is no embedded binary data, so `binwalk`/`exiftool` are not needed.
 
 ## Decoding
-Base on the secret function, we can encode directly by XOR with the `KEY = 0x42`:
+Based on the secret function, we can decode directly by XOR with the `KEY = 0x42`:
 ```python
 ''.join(chr(b ^ 0x42) for b in _ENC)
 ```
 
-We had create a payload, then we ran the `jail.py` with this payload and get the flag:
+We created a payload, ran `jail.py` with it, and obtained the flag:
 
 - Payload:
     ```python

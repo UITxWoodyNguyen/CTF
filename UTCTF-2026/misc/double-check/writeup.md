@@ -6,7 +6,7 @@ We're planning on deploying some new static sites for our officers. We've cloned
 > https://github.com/Jarpiano/utctf-profile
 
 ## Osint Path
-Base on the description, first we try to clone the github repository and here is the tree of this repo:
+Based on the description, we first cloned the GitHub repository; here is the repository tree:
 > [tree.sh](https://github.com/UITxWoodyNguyen/CTF/blob/main/UTCTF-2026/misc/double-check/tree.sh)
 
 Next, try checking the git log:
@@ -28,12 +28,12 @@ a5fc33e Upstreaming updates to theme to be compatible with Hugo v0.146.0 >= (#98
 6bc0059 Catalan il8n (#957)
 ```
 
-Base on the result, we can see a suspicious commit:
+From the result, we can see a suspicious commit:
 ```bash
 a1546af added key file to integrate with AWS
 ```
 
-Checking the information of that commit, we have this result:
+Inspecting that commit shows:
 ```bash
 $ git show --name-status a1546af
 commit a1546afedb6edeffa9227d70b1f5e110bda9f7e6
@@ -45,7 +45,7 @@ Date:   Thu Mar 12 10:33:12 2026 -0500
 A       static/fonts/secret-keys/AWS-key.txt
 ```
 
-The result return to a url to `AWS-key.txt`, then we try to leak content of this file and we have received the flag:
+The result includes a path to `AWS-key.txt`; showing the file's contents revealed the flag:
 ```bash
 $ git show a1546af:static/fonts/secret-keys/AWS-key.txt
 utflag{n07h1n6_70_h1d3}
