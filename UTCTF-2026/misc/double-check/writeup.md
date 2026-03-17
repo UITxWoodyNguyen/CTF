@@ -7,7 +7,7 @@ We're planning on deploying some new static sites for our officers. We've cloned
 
 ## Osint Path
 Base on the description, first we try to clone the github repository and here is the tree of this repo:
-> ![tree.sh](https://github.com/UITxWoodyNguyen/CTF/blob/main/UTCTF-2026/misc/double-check/tree.sh)
+> [tree.sh](https://github.com/UITxWoodyNguyen/CTF/blob/main/UTCTF-2026/misc/double-check/tree.sh)
 
 Next, try checking the git log:
 ```bash
