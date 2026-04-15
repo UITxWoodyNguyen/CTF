@@ -32,6 +32,10 @@ Do address đối với binary này là cố định, nên có thể xác địn
 - `puts@got`: `0x0804BBBC`
 - `printf@got`: `0x0804BBB0`
 
+Kiểm tra thư viện binary này sử dụng (`libc.so.6`) để lấy address của `system` và `puts`:
+- `system`: `0x00048170`
+- `puts`: `0x000732A0`
+
 Thực hiện kiểm tra `vuln()`, nhận diện được lỗ hổng trong binary này là **Format String** khi user input được truyền thẳng đến hàm `printf()`. Cụ thể, có 2 lần lệnh `printf` được gọi để nhận trực tiếp buffer input:
 - Sau khi read ASCII ở prompt chính:
 
@@ -68,6 +72,27 @@ Từ đó ta có exploit process như sau:
 - `%{fmt_offset}$.4s` dereference đối số thứ fmt_offset như con trỏ
 - `printf` đọc dữ liệu tại `fgets@GOT`
 - Các byte leak ra là địa chỉ runtime của `fgets` trong libc
+
+**Stack Layout**:
+```
+          STACK
+---------------------------------
+| ...                           |
+| target_got (fgets@GOT)       | <-- fmt_offset
+| "START%...END"               |
+---------------------------------
+
+          ↓ printf đọc
+
+fmt_offset → lấy target_got
+           → dereference
+           → đọc fgets@GOT
+
+          ↓
+
+OUTPUT:
+START + fgets_addr + END
+```
 
 Sau khi leak được runtome address trong libc, thực hiện tính được libc_base address theo công thức sau:
 ```python
