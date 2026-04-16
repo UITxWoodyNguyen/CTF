@@ -52,26 +52,28 @@ if (clutch_score(mold_id, pigment_code) == 0x23ccdu) {
 }
 ```
 
-Gọi $a = ((mold\_id >> 2) \& 0x43)$, khi đó:
-
-$$
-\text{score} = (a \mid p) + 2p
-$$
-
-Chọn cách đơn giản nhất: `mold_id = 0` thì $a = 0$.
+Gọi:
+```
+a = ((mold_id >> 2) & 0x43)
+```
 
 Khi đó:
+```
+score = (a | p) + 2p
+```
 
-$$
-\text{score} = p + 2p = 3p
-$$
+Chọn cách đơn giản nhất: `mold_id = 0` thì `a = 0`.
+
+Khi đó:
+```
+score = p + 2p = 3p
+```
 
 Cần:
-
-$$
-3p = 0x23ccd
-\Rightarrow p = \frac{0x23ccd}{3} = 0xbeef = 48879
-$$
+```
+3p = 0x23ccd  
+=> p = 0x23ccd / 3 = 0xbeef = 48879
+```
 
 => Cặp hợp lệ: **`mold_id = 0`, `pigment_code = 48879`**.
 
