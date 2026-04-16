@@ -55,14 +55,15 @@ if (clutch_score(mold_id, pigment_code) == 0x23ccdu) {
 Gọi $a = ((mold\_id >> 2) \& 0x43)$, khi đó:
 
 $$
-score = (a \;|\; p) + 2p
+\text{score} = (a \mid p) + 2p
 $$
 
 Chọn cách đơn giản nhất: `mold_id = 0` thì $a = 0$.
+
 Khi đó:
 
 $$
-score = p + 2p = 3p
+\text{score} = p + 2p = 3p
 $$
 
 Cần:
