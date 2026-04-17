@@ -59,7 +59,7 @@ Trong hàm `verify()`, thực hiện phép so sánh bộ nhớ (`memcmp`) giữa
 
 ## Bug Finding
 
-## `rotate()` function
+### `rotate()` function
 Qua phân tích trên, ta tìm được công thức được sử dụng trong hàm `rotate()` là `buffer[i] = (buffer[i] << 3) | (buffer[i] >> 6)`. Tuy nhiên, công thức này có thể gây mất dữ liệu. 
 
 Assembly Source thực tế của bit rotation process:
@@ -87,7 +87,7 @@ Assembly Source thực tế của bit rotation process:
 
 Do đó, bit rotation thực tế chỉ đang tạo giá trị sai lệch so với giá trị chuỗi bit gốc.
 
-## SBOX
+### SBOX
 
 Thực hiện kiểm tra SBOX data, ta có được kết quả như sau:
 
